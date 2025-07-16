@@ -17,7 +17,7 @@ D3ExperimentResults class >> dataConfiguration [
 	| blueprintMPath blueprintOPath microdownMPath microdownOPath blueprintParticipations microdownParticipations |
 	blueprintOPath := 'echo/data/Echo/classBluePrint-Original-experiment/' asFileReference.
 	blueprintMPath := 'echo/data/Echo/classBluePrint-Modify-experiment/' asFileReference.
-	microdownOPath := 'echo/data/Echo/Microdown-Original-experiment/' asFileReference.
+	microdownOPath := 'echo/data/Echo/Microdown-Origin-experiment/' asFileReference.
 	microdownMPath := 'echo/data/Echo/Microdown-Modify-experiment/' asFileReference.
 
 	blueprintParticipations := #( '01' '03' '05' '07' '08' '13' '14' )
