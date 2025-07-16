@@ -1,3 +1,6 @@
+"
+I model a D3 experiment.
+"
 Class {
 	#name : 'D3ExperimentResults',
 	#superclass : 'Object',
