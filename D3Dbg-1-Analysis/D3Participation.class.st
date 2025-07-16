@@ -89,6 +89,15 @@ D3Participation >> participationId: anObject [
 	participationId := anObject
 ]
 
+{ #category : 'printing' }
+D3Participation >> printOn: aStream [
+
+	participationId < 10 ifTrue: [ aStream << '0' ].
+	participationId printOn: aStream.
+	aStream << ' << '.
+	aStream << taskName
+]
+
 { #category : 'accessing' }
 D3Participation >> taskName: aString [ 
 	taskName := aString
