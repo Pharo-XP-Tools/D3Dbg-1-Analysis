@@ -1,0 +1,95 @@
+"
+I model a D3 participation, my instvar whose name starts by ""o"" and ""m"" represent respectively data from the original and the modified experimental images.
+"
+Class {
+	#name : 'D3Participation',
+	#superclass : 'Object',
+	#instVars : [
+		'participationId',
+		'oEventHistory',
+		'mEventHistory',
+		'oDSA',
+		'mDSA',
+		'taskName'
+	],
+	#category : 'D3Dbg-1-Analysis',
+	#package : 'D3Dbg-1-Analysis'
+}
+
+{ #category : 'initialization' }
+D3Participation >> initializeWithData: aD3DataDictionary [
+
+	oDSA := DSA new fromEvents:
+		        (OCDbgExampleCode loadDataFromPath:
+			         (aD3DataDictionary at: 'original')).
+	oEventHistory := oDSA history.
+	mDSA := DSA new fromEvents:
+		        (OCDbgExampleCode loadDataFromPath:
+			         (aD3DataDictionary at: 'modified')).
+	mEventHistory := mDSA history
+]
+
+{ #category : 'accessing' }
+D3Participation >> mDSA [
+
+	^ mDSA
+]
+
+{ #category : 'accessing' }
+D3Participation >> mDSA: anObject [
+
+	mDSA := anObject
+]
+
+{ #category : 'accessing' }
+D3Participation >> mEventHistory [
+
+	^ mEventHistory
+]
+
+{ #category : 'accessing' }
+D3Participation >> mEventHistory: anObject [
+
+	mEventHistory := anObject
+]
+
+{ #category : 'accessing' }
+D3Participation >> oDSA [
+
+	^ oDSA
+]
+
+{ #category : 'accessing' }
+D3Participation >> oDSA: anObject [
+
+	oDSA := anObject
+]
+
+{ #category : 'accessing' }
+D3Participation >> oEventHistory [
+
+	^ oEventHistory
+]
+
+{ #category : 'accessing' }
+D3Participation >> oEventHistory: anObject [
+
+	oEventHistory := anObject
+]
+
+{ #category : 'accessing' }
+D3Participation >> participationId [
+
+	^ participationId
+]
+
+{ #category : 'accessing' }
+D3Participation >> participationId: anObject [
+
+	participationId := anObject
+]
+
+{ #category : 'accessing' }
+D3Participation >> taskName: aString [ 
+	taskName := aString
+]
