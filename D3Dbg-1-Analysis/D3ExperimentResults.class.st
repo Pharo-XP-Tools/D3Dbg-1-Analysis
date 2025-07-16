@@ -4,6 +4,9 @@ I model a D3 experiment.
 Class {
 	#name : 'D3ExperimentResults',
 	#superclass : 'Object',
+	#instVars : [
+		'participations'
+	],
 	#category : 'D3Dbg-1-Analysis',
 	#package : 'D3Dbg-1-Analysis'
 }
@@ -43,4 +46,21 @@ D3ExperimentResults class >> dataConfiguration [
 { #category : 'data access' }
 D3ExperimentResults >> dataConfiguration [
 	^self class dataConfiguration
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> loadParticipations [
+
+	participations := SortedCollection new sortBlock: [ :p1 :p2 |
+		                  p1 participationId < p2 participationId ].
+	self dataConfiguration keysAndValuesDo: [
+		:taskName
+		:participationDataFilename |
+		participationDataFilename keysAndValuesDo: [ :idString :dataFilename |
+			| participation |
+			participation := D3Participation new.
+			participation taskName: taskName.
+			participation participationId: idString asNumber.
+			participation initializeWithData: dataFilename.
+			participations add: participation ] ]
 ]
