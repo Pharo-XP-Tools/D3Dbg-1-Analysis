@@ -31,9 +31,9 @@ D3DataAnalysisPresenter >> buildParticipantsToolbar [
 ]
 
 { #category : 'initialization' }
-D3DataAnalysisPresenter >> colorForTaskNamed: aString [
+D3DataAnalysisPresenter >> colorForParticipation: p [
 
-	^ aString = 'Microdown'
+	^ p taskName = 'Microdown'
 		  ifTrue: [ Color fromHexString: #D1F3E2 ]
 		  ifFalse: [ Color fromHexString: #FEEEBA ]
 ]
@@ -81,42 +81,36 @@ D3DataAnalysisPresenter >> displayVisualizationsFor: p [
 { #category : 'initialization' }
 D3DataAnalysisPresenter >> initializePresenters [
 
-
-
-	taskAnalysisPresenter :=" OCREMetricAnalysisPresenter on: OrderedCollection new." StPresenter new.
+	taskAnalysisPresenter := StPresenter new. " OCREMetricAnalysisPresenter on: OrderedCollection new."
 	taskAnalysisPresenter layout: SpBoxLayout newTopToBottom.
-	
+
 	participantsTable := self newTable.
 	participantsTable contextMenu: self menu.
-	
-	participantsTable addColumn:
-		((SpStringTableColumn
+
+	participantsTable addColumn: ((SpStringTableColumn
 			  title: 'Id'
 			  evaluated: [ :item | item participationId ])
-			 displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
 			 width: 30;
 			 yourself).
 	participantsTable addColumn: ((SpStringTableColumn
 			  title: 'Date'
 			  evaluated: [ :item | item dateStarted asLocalStringYMDHM ])
-				displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
 			 width: 100;
 			 yourself).
 	participantsTable addColumn: ((SpStringTableColumn
 			  title: 'Duration'
 			  evaluated: [ :item | item duration ])
-			  displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
-			 width: 100;
+			 width: 75;
 			 yourself).
 
 	participantsTable addColumn: ((SpStringTableColumn
 			  title: 'Task'
 			  evaluated: [ :item | item taskName ])
-			  displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
-			 width: 100;
+			 displayBackgroundColor: [ :p | self colorForParticipation: p ];
+			 width: 75;
 			 yourself).
-			
-"	participantsTable addColumn:
+
+	"	participantsTable addColumn:
 		((SpImageTableColumn title: ' ' evaluated: [ :item |
 				  item isControlTaskValid
 					  ifTrue: [ self iconNamed: #testGreen ]
@@ -127,7 +121,7 @@ D3DataAnalysisPresenter >> initializePresenters [
 	"
 
 
-"	participantsTable addColumn: (OCDbgLinkTableColumn new
+	"	participantsTable addColumn: (OCDbgLinkTableColumn new
 			 title: 'Correctness';
 			 evaluated: [ :item | self printCorrectnessFor: item ];
 			 action: [ :item | self checkData: item ];
@@ -144,21 +138,20 @@ D3DataAnalysisPresenter >> initializePresenters [
 
 	participantsTable items: (experiment participations sort: [ :a :b |
 			 a participationId < b participationId ]).
-		
-	participantsTable transmitDo:[:p| 
-		self displayVisualizationsFor: p
-		].
-	
-	
+
+	participantsTable transmitDo: [ :p |
+		self displayVisualizationsFor: p ].
+
+
 	"buttonBar := self newButtonBar.
 	buttonBar
 		placeAtStart;"
-"		add: (self newButton
+	"		add: (self newButton
 				 icon: (self application iconNamed: #glamorousZoomIn);
 				 action: [ self openDetailedAnalysis ];
 				 label: 'Explore';
 				 yourself);"
-		"add: (self newButton
+	"add: (self newButton
 				 icon: (self application iconNamed: #references);
 				 action: [ self openDiagrams ];
 				 label: 'Diagrams';
