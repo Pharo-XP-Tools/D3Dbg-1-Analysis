@@ -5,7 +5,8 @@ Class {
 	#name : 'D3ExperimentResults',
 	#superclass : 'Object',
 	#instVars : [
-		'participations'
+		'participations',
+		'questions'
 	],
 	#category : 'D3Dbg-1-Analysis',
 	#package : 'D3Dbg-1-Analysis'
@@ -73,6 +74,16 @@ D3ExperimentResults >> loadParticipations [
 			participation participationId: idString asNumber.
 			participation initializeWithData: dataFilename.
 			participations add: participation ] ]
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> loadQuestions [
+
+	questions := 'echo/data/questions.json' asFileReference
+		             readStreamDo: [ :stream |
+			             STON reader
+				             on: stream;
+				             next ]
 ]
 
 { #category : 'accessing' }
