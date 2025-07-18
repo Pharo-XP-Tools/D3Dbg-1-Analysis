@@ -69,11 +69,11 @@ D3DataAnalysisPresenter >> displayVisualizationsFor: p [
 	taskAnalysisPresenter layout: (SpBoxLayout newLeftToRight
 			 add: (SpBoxLayout newTopToBottom
 					  add: 'Origin' expand: false fill: false padding: 5;
-					  add: p oDSA inspectorVisualizeWindowHistory;
+					  add: (StInspectorPresenter onObject: p oDSA);
 					  yourself);
 			 add: (SpBoxLayout newTopToBottom
 					  add: 'Modified' expand: false fill: false padding: 5; 
-					  add: p mDSA inspectorVisualizeWindowHistory;
+					  add: (StInspectorPresenter onObject: p mDSA);
 					  yourself);
 			 yourself)
 ]
