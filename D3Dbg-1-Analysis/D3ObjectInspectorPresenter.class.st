@@ -6,6 +6,14 @@ Class {
 	#tag : 'Presenters'
 }
 
+{ #category : 'initialization' }
+D3ObjectInspectorPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: views;
+		  yourself
+]
+
 { #category : 'private - factory' }
 D3ObjectInspectorPresenter >> newInspectionForContext: aContext [
 
