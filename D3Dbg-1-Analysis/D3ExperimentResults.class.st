@@ -43,9 +43,19 @@ D3ExperimentResults class >> dataConfiguration [
 		  yourself
 ]
 
+{ #category : 'accessing' }
+D3ExperimentResults class >> experimentName [
+	^'Echo-1'
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> dataConfiguration [
 	^self class dataConfiguration
+]
+
+{ #category : 'accessing' }
+D3ExperimentResults >> experimentName [
+	^self class experimentName
 ]
 
 { #category : 'data access' }
