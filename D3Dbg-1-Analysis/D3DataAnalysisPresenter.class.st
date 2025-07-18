@@ -1,0 +1,223 @@
+"
+I'm a presenter for the exploration and the analysis of the D3 echo-1 qualitative experiment.
+"
+Class {
+	#name : 'D3DataAnalysisPresenter',
+	#superclass : 'SpPresenter',
+	#instVars : [
+		'participantsTable',
+		'experiment',
+		'buttonBar',
+		'progress',
+		'participantsToolbar',
+		'dataDirs',
+		'taskAnalysisPresenter'
+	],
+	#category : 'D3Dbg-1-Analysis-Presenters',
+	#package : 'D3Dbg-1-Analysis',
+	#tag : 'Presenters'
+}
+
+{ #category : 'layout' }
+D3DataAnalysisPresenter >> buildParticipantsToolbar [
+
+	participantsToolbar := self newToolbar.
+	participantsToolbar addItem: (SpToolbarButtonPresenter new
+			 label: 'Fix times';
+			 icon: (self iconNamed: #history);
+			 action: [ self fixTimes ];
+			 yourself).
+	participantsToolbar beIcons
+]
+
+{ #category : 'initialization' }
+D3DataAnalysisPresenter >> colorForTaskNamed: aString [
+
+	^ aString = 'Microdown'
+		  ifTrue: [ Color fromHexString: #D1F3E2 ]
+		  ifFalse: [ Color fromHexString: #FEEEBA ]
+]
+
+{ #category : 'layout' }
+D3DataAnalysisPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+"		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 50 percent;
+				   add: dataDirs;
+				   add: buttonBar)
+		  height: self class toolbarHeight + 5;"
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 50 percent;
+				   add: "(SpPanedLayout newTopToBottom
+						    positionOfSlider: 25 percent;
+						    add: (SpBoxLayout newTopToBottom
+								     add: 'Tasks' expand: false fill: false;
+								     add: tasksTable;
+								     yourself);
+						    add: "(SpBoxLayout newTopToBottom
+								     add: (SpBoxLayout newLeftToRight
+										      add: 'Participants:' expand: false fill: false;
+										      add: self participationsGeneralInfo
+										      expand: false
+										      fill: false;
+										      add: participantsToolbar height: 16;
+										      yourself)
+								     expand: false
+								     fill: false
+								     padding: 5;
+								     add: participantsTable;
+								     yourself);
+						    yourself);
+				   add: taskAnalysisPresenter;
+				   yourself")";
+		  yourself
+]
+
+{ #category : 'initialization' }
+D3DataAnalysisPresenter >> initializePresenters [
+
+
+
+	taskAnalysisPresenter :=" OCREMetricAnalysisPresenter on: OrderedCollection new." StPresenter new.
+	taskAnalysisPresenter layout: SpBoxLayout newTopToBottom.
+	
+	participantsTable := self newTable.
+	participantsTable contextMenu: self menu.
+	
+	participantsTable addColumn:
+		((SpStringTableColumn
+			  title: 'Id'
+			  evaluated: [ :item | item participationId ])
+			 displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
+			 width: 30;
+			 yourself).
+	participantsTable addColumn: ((SpStringTableColumn
+			  title: 'Date'
+			  evaluated: [ :item | item dateStarted asLocalStringYMDHM ])
+				displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
+			 width: 100;
+			 yourself).
+	participantsTable addColumn: ((SpStringTableColumn
+			  title: 'Duration'
+			  evaluated: [ :item | item duration ])
+			  displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
+			 width: 100;
+			 yourself).
+
+	participantsTable addColumn: ((SpStringTableColumn
+			  title: 'Task'
+			  evaluated: [ :item | item taskName ])
+			  displayBackgroundColor: [ :p | self colorForTaskNamed: p taskName ];
+			 width: 100;
+			 yourself).
+			
+"	participantsTable addColumn:
+		((SpImageTableColumn title: ' ' evaluated: [ :item |
+				  item isControlTaskValid
+					  ifTrue: [ self iconNamed: #testGreen ]
+					  ifFalse: [ self iconNamed: #testRed ] ])
+			 width: 16;
+			 sortFunction: nil;
+			 yourself).
+	"
+
+
+"	participantsTable addColumn: (OCDbgLinkTableColumn new
+			 title: 'Correctness';
+			 evaluated: [ :item | self printCorrectnessFor: item ];
+			 action: [ :item | self checkData: item ];
+			 displayColor: [ :item | self correctnessColorFor: item ];
+			 width: 100;
+			 yourself)."
+
+	"	participantsTable addColumn: ((OCDbgActionTableColumn title: 'Time check' 
+		evaluated: [ :item | self iconNamed: #history ])
+			action:[:p| self fixTime: p];
+			 width: 40;
+			 sortFunction: nil;
+			 yourself)."
+
+	participantsTable items: (experiment participations sort: [ :a :b |
+			 a participationId < b participationId ]).
+	
+	
+	"buttonBar := self newButtonBar.
+	buttonBar
+		placeAtStart;"
+"		add: (self newButton
+				 icon: (self application iconNamed: #glamorousZoomIn);
+				 action: [ self openDetailedAnalysis ];
+				 label: 'Explore';
+				 yourself);"
+		"add: (self newButton
+				 icon: (self application iconNamed: #references);
+				 action: [ self openDiagrams ];
+				 label: 'Diagrams';
+				 yourself);
+		add: (self newButton
+				 icon: (self application iconNamed: #glamorousInspect);
+				 action: [ experiment inspect ];
+				 label: 'Inspect';
+				 yourself);
+		add: (self newButton
+				 icon: (self application iconNamed: #smallDoIt);
+				 action: [ self doAnalysisAndUpdate ];
+				 label: 'Analyze';
+				 yourself);
+		add: (self newButton
+				 icon: (self application iconNamed: #glamorousTable);
+				 action: [ self reload ];
+				 label: 'Load';
+				 yourself);
+		add: (self newButton
+				 icon: (self application iconNamed: #smallForward);
+				 action: [ self stonExport ];
+				 label: 'To STON';
+				 yourself);
+			add: (self newButton
+				 icon: (self application iconNamed: #glamorousDown);
+				 action: [ self stonImport ];
+				 label: 'From STON';
+				 yourself);
+		add: (self newButton
+				 icon: (self application iconNamed: #glamorousFolder);
+				 action: [ self chooseAndLoad ];
+				 label: 'Open';
+				 yourself).
+"
+
+	self buildParticipantsToolbar
+]
+
+{ #category : 'layout' }
+D3DataAnalysisPresenter >> menu [
+
+	^ self newMenu
+		  addItem: [ :anItem |
+			  anItem
+				  name: 'Fix data';
+				  iconName: #configuration;
+				  action: [
+					  (OCRETaskSorcererPresenter on: participantsTable selectedItem) experimentResultsBrowser:  self;
+						  open ] ];
+		  addItem: [ :anItem |
+			  anItem
+				  name: 'inspect';
+				  iconName: #glamorousInspect;
+				  action: [ participantsTable selectedItem inspect ] ];
+		  yourself
+]
+
+{ #category : 'analysis' }
+D3DataAnalysisPresenter >> participationsGeneralInfo [
+
+	^ String streamContents: [ :s |
+		  s << experiment participations size asString.
+		  s << ' participations' ]
+]
+
+{ #category : 'accessing - model' }
+D3DataAnalysisPresenter >> setModelBeforeInitialization: aD3ExperimentResults [
+	experiment := aD3ExperimentResults 
+]
