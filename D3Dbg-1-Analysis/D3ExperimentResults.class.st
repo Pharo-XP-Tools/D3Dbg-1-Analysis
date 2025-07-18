@@ -59,6 +59,17 @@ D3ExperimentResults >> experimentName [
 	^self class experimentName
 ]
 
+{ #category : 'installing' }
+D3ExperimentResults >> load [ 
+
+	| question_by_file |
+	self loadParticipations .
+	self loadQuestions .
+	
+	question_by_file := (questions at: 'questions_par_fichier').
+	question_by_file keysDo: [ :e | (participations at: ((e truncateTo:2) asNumber ))question: (question_by_file at:e) ]
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> loadParticipations [
 

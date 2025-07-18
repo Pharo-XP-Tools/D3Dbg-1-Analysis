@@ -10,7 +10,8 @@ Class {
 		'mEventHistory',
 		'oDSA',
 		'mDSA',
-		'taskName'
+		'taskName',
+		'questions'
 	],
 	#category : 'D3Dbg-1-Analysis',
 	#package : 'D3Dbg-1-Analysis'
@@ -113,6 +114,18 @@ D3Participation >> printOn: aStream [
 	participationId printOn: aStream.
 	aStream << ' << '.
 	aStream << taskName
+]
+
+{ #category : 'services' }
+D3Participation >> question [ 
+
+	^ questions
+]
+
+{ #category : 'services' }
+D3Participation >> question: aDictionnary [ 
+
+	questions := aDictionnary
 ]
 
 { #category : 'accessing' }
