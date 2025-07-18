@@ -16,6 +16,23 @@ Class {
 	#package : 'D3Dbg-1-Analysis'
 }
 
+{ #category : 'accessing' }
+D3Participation >> dateStarted [
+	^oEventHistory dateTime min: mEventHistory dateTime
+]
+
+{ #category : 'accessing' }
+D3Participation >> duration [
+	^(oEventHistory absoluteTimeTaken max: mEventHistory absoluteTimeTaken) minutes
+]
+
+{ #category : 'accessing' }
+D3Participation >> durationHumanReadable [
+
+	^ String streamContents: [ :s |
+		  self duration printHumanReadableOn: s ]
+]
+
 { #category : 'initialization' }
 D3Participation >> initializeWithData: aD3DataDictionary [
 
@@ -96,6 +113,11 @@ D3Participation >> printOn: aStream [
 	participationId printOn: aStream.
 	aStream << ' << '.
 	aStream << taskName
+]
+
+{ #category : 'accessing' }
+D3Participation >> taskName [
+	^ taskName
 ]
 
 { #category : 'accessing' }

@@ -64,3 +64,9 @@ D3ExperimentResults >> loadParticipations [
 			participation initializeWithData: dataFilename.
 			participations add: participation ] ]
 ]
+
+{ #category : 'accessing' }
+D3ExperimentResults >> participations [
+
+	^ participations
+]
