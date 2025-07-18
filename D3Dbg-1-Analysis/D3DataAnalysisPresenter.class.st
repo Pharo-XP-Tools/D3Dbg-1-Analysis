@@ -42,36 +42,40 @@ D3DataAnalysisPresenter >> colorForTaskNamed: aString [
 D3DataAnalysisPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
-"		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: 50 percent;
-				   add: dataDirs;
-				   add: buttonBar)
-		  height: self class toolbarHeight + 5;"
+
+		add: (SpPanedLayout newTopToBottom positionOfSlider: 30 percent;
+		
 		  add: (SpPanedLayout newLeftToRight
-				   positionOfSlider: 50 percent;
-				   add: "(SpPanedLayout newTopToBottom
-						    positionOfSlider: 25 percent;
-						    add: (SpBoxLayout newTopToBottom
-								     add: 'Tasks' expand: false fill: false;
-								     add: tasksTable;
-								     yourself);
-						    add: "(SpBoxLayout newTopToBottom
-								     add: (SpBoxLayout newLeftToRight
-										      add: 'Participants:' expand: false fill: false;
-										      add: self participationsGeneralInfo
-										      expand: false
-										      fill: false;
-										      add: participantsToolbar height: 16;
-										      yourself)
-								     expand: false
-								     fill: false
-								     padding: 5;
-								     add: participantsTable;
-								     yourself);
-						    yourself);
+	positionOfSlider: 40 percent;
+	add: (SpBoxLayout newTopToBottom
+			 add: (SpBoxLayout newLeftToRight
+					  add: 'Participants:' expand: false fill: false;
+					  add: self participationsGeneralInfo expand: false fill: false;
+					  add: participantsToolbar height: 16;
+					  yourself)
+			 expand: false
+			 fill: false
+			 padding: 5;
+			 add: participantsTable;
+			 yourself);
+	yourself);
 				   add: taskAnalysisPresenter;
-				   yourself")";
-		  yourself
+				   yourself); yourself
+]
+
+{ #category : 'layout' }
+D3DataAnalysisPresenter >> displayVisualizationsFor: p [
+
+	taskAnalysisPresenter layout: (SpBoxLayout newLeftToRight
+			 add: (SpBoxLayout newTopToBottom
+					  add: 'Origin' expand: false fill: false padding: 5;
+					  add: p oDSA inspectorVisualizeWindowHistory;
+					  yourself);
+			 add: (SpBoxLayout newTopToBottom
+					  add: 'Modified' expand: false fill: false padding: 5; 
+					  add: p mDSA inspectorVisualizeWindowHistory;
+					  yourself);
+			 yourself)
 ]
 
 { #category : 'initialization' }
@@ -140,6 +144,10 @@ D3DataAnalysisPresenter >> initializePresenters [
 
 	participantsTable items: (experiment participations sort: [ :a :b |
 			 a participationId < b participationId ]).
+		
+	participantsTable transmitDo:[:p| 
+		self displayVisualizationsFor: p
+		].
 	
 	
 	"buttonBar := self newButtonBar.
@@ -188,6 +196,12 @@ D3DataAnalysisPresenter >> initializePresenters [
 "
 
 	self buildParticipantsToolbar
+]
+
+{ #category : 'initialization' }
+D3DataAnalysisPresenter >> initializeWindow: aWindowPresenter [
+
+	aWindowPresenter title: experiment experimentName
 ]
 
 { #category : 'layout' }
