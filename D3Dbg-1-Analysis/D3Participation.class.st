@@ -17,6 +17,27 @@ Class {
 }
 
 { #category : 'accessing' }
+D3Participation >> collectTimeDiscrepancies [
+
+	| o m |
+	o := oEventHistory collectTimeDiscrepancies collect: [ :association |
+		     self collectTimeErrorFor: association ].
+	m := mEventHistory collectTimeDiscrepancies collect: [ :association |
+		     self collectTimeErrorFor: association ].
+	self halt
+]
+
+{ #category : 'accessing' }
+D3Participation >> collectTimeErrorFor: anAssociation [
+
+	^ TaskTimeControl new
+		  buildTimeErrorFrom: anAssociation key first dateTime
+		  to: anAssociation key second dateTime
+		  delta: anAssociation value
+		  data: anAssociation key
+]
+
+{ #category : 'accessing' }
 D3Participation >> dateStarted [
 	^oEventHistory dateTime min: mEventHistory dateTime
 ]
