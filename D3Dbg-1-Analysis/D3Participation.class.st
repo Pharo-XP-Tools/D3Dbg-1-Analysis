@@ -32,8 +32,8 @@ D3Participation >> collectTimeDiscrepancies [
 D3Participation >> collectTimeErrorFor: anAssociation [
 
 	^ TaskTimeControl new
-		  buildTimeErrorFrom: anAssociation key first dateTime
-		  to: anAssociation key second dateTime
+		  buildTimeErrorFrom: anAssociation key second dateTime
+		  to: anAssociation key first dateTime
 		  delta: anAssociation value
 		  data: anAssociation key
 ]
