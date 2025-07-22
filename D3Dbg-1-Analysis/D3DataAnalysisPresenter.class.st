@@ -11,7 +11,8 @@ Class {
 		'progress',
 		'participantsToolbar',
 		'dataDirs',
-		'taskAnalysisPresenter'
+		'taskAnalysisPresenter',
+		'questionAnalysisPresenter'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -58,9 +59,31 @@ D3DataAnalysisPresenter >> defaultLayout [
 			 padding: 5;
 			 add: participantsTable;
 			 yourself);
+	add: (SpBoxLayout newTopToBottom
+			 add: (SpBoxLayout newLeftToRight
+					  add: 'Questions' expand: false fill: false;
+					  yourself)
+			 expand: false
+			 fill: false
+			 padding: 5;
+			 add: questionAnalysisPresenter;
+			 yourself);
 	yourself);
 				   add: taskAnalysisPresenter;
 				   yourself); yourself
+				
+			
+			
+]
+
+{ #category : 'layout' }
+D3DataAnalysisPresenter >> displayQuestionFor: p [
+
+	questionAnalysisPresenter layout: (SpBoxLayout newLeftToRight
+			 add: (SpBoxLayout newTopToBottom
+					  add: (D3QuestionInspectorPresenter onObject: p question );
+					  yourself);
+			 yourself)
 ]
 
 { #category : 'layout' }
@@ -81,7 +104,10 @@ D3DataAnalysisPresenter >> displayVisualizationsFor: p [
 { #category : 'initialization' }
 D3DataAnalysisPresenter >> initializePresenters [
 
-	taskAnalysisPresenter := StPresenter new. " OCREMetricAnalysisPresenter on: OrderedCollection new."
+	questionAnalysisPresenter := StPresenter new. 
+	questionAnalysisPresenter layout: SpBoxLayout newTopToBottom .
+
+	taskAnalysisPresenter := StPresenter new. 
 	taskAnalysisPresenter layout: SpBoxLayout newTopToBottom.
 
 	participantsTable := self newTable.
@@ -105,42 +131,17 @@ D3DataAnalysisPresenter >> initializePresenters [
 
 	participantsTable addColumn: ((SpStringTableColumn
 			  title: 'Task'
-			  evaluated: [ :item | item taskName ])
+			  evaluated: [ :item | item  ])
 			 displayBackgroundColor: [ :p | self colorForParticipation: p ];
 			 width: 75;
 			 yourself).
 
-	"	participantsTable addColumn:
-		((SpImageTableColumn title: ' ' evaluated: [ :item |
-				  item isControlTaskValid
-					  ifTrue: [ self iconNamed: #testGreen ]
-					  ifFalse: [ self iconNamed: #testRed ] ])
-			 width: 16;
-			 sortFunction: nil;
-			 yourself).
-	"
-
-
-	"	participantsTable addColumn: (OCDbgLinkTableColumn new
-			 title: 'Correctness';
-			 evaluated: [ :item | self printCorrectnessFor: item ];
-			 action: [ :item | self checkData: item ];
-			 displayColor: [ :item | self correctnessColorFor: item ];
-			 width: 100;
-			 yourself)."
-
-	"	participantsTable addColumn: ((OCDbgActionTableColumn title: 'Time check' 
-		evaluated: [ :item | self iconNamed: #history ])
-			action:[:p| self fixTime: p];
-			 width: 40;
-			 sortFunction: nil;
-			 yourself)."
 
 	participantsTable items: (experiment participations sort: [ :a :b |
 			 a participationId < b participationId ]).
 
 	participantsTable transmitDo: [ :p |
-		self displayVisualizationsFor: p ].
+		self displayVisualizationsFor: p. self displayQuestionFor: p ].
 
 
 	"buttonBar := self newButtonBar.
@@ -188,7 +189,6 @@ D3DataAnalysisPresenter >> initializePresenters [
 				 yourself).
 "
 
-	self buildParticipantsToolbar
 ]
 
 { #category : 'initialization' }

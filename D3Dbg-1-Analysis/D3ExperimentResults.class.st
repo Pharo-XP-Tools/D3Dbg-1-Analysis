@@ -5,7 +5,8 @@ Class {
 	#name : 'D3ExperimentResults',
 	#superclass : 'Object',
 	#instVars : [
-		'participations'
+		'participations',
+		'questions'
 	],
 	#category : 'D3Dbg-1-Analysis',
 	#package : 'D3Dbg-1-Analysis'
@@ -58,6 +59,17 @@ D3ExperimentResults >> experimentName [
 	^self class experimentName
 ]
 
+{ #category : 'installing' }
+D3ExperimentResults >> load [ 
+
+	| question_by_file |
+	self loadParticipations .
+	self loadQuestions .
+	
+	question_by_file := (questions at: 'questions_par_fichier').
+	question_by_file keysDo: [ :e | (participations at: ((e truncateTo:2) asNumber ))question: (question_by_file at:e) ]
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> loadParticipations [
 
@@ -73,6 +85,16 @@ D3ExperimentResults >> loadParticipations [
 			participation participationId: idString asNumber.
 			participation initializeWithData: dataFilename.
 			participations add: participation ] ]
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> loadQuestions [
+
+	questions := 'echo/data/questions.json' asFileReference
+		             readStreamDo: [ :stream |
+			             STON reader
+				             on: stream;
+				             next ]
 ]
 
 { #category : 'accessing' }
