@@ -22,10 +22,16 @@ D3TimeOutsidePharo class >> on: anArray [
 		  yourself
 ]
 
+{ #category : 'computation' }
+D3TimeOutsidePharo >> interruptionDuration [
+
+	^ (startEvent stop min: stopEvent stop) - stopEvent start
+]
+
 { #category : 'printing' }
 D3TimeOutsidePharo >> printOn: aStream [
 
-	startEvent stop - stopEvent start printHumanReadableOn: aStream
+	self interruptionDuration printHumanReadableOn: aStream
 ]
 
 { #category : 'accessing' }
