@@ -8,8 +8,9 @@ Class {
 		'participations',
 		'questions'
 	],
-	#category : 'D3Dbg-1-Analysis',
-	#package : 'D3Dbg-1-Analysis'
+	#category : 'D3Dbg-1-Analysis-Model',
+	#package : 'D3Dbg-1-Analysis',
+	#tag : 'Model'
 }
 
 { #category : 'raw data' }
