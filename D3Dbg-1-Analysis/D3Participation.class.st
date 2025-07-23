@@ -21,33 +21,38 @@ Class {
 { #category : 'accessing' }
 D3Participation >> collectTimeDiscrepancies [
 
-	| o m all overlaps i current|
+	| o m all overlaps i current |
 	o := oEventHistory collectTimeDiscrepancies collect: [ :association |
-		     (self collectTimeErrorFor: association) tag: #origin; yourself ].
+		     (self collectTimeErrorFor: association)
+			     tag: #origin;
+			     yourself ].
 	m := mEventHistory collectTimeDiscrepancies collect: [ :association |
-		     (self collectTimeErrorFor: association) tag: #modified; yourself].
-	
+		     (self collectTimeErrorFor: association)
+			     tag: #modified;
+			     yourself ].
+
 	all := SortedCollection new.
 	all sortBlock: [ :x :y | x start <= y start ].
 	all addAll: o.
 	all addAll: m.
-	
-	
+
+
 	overlaps := OrderedCollection new.
 	current := all first.
 	i := 2.
-		
-	[ i <= all size ]
-		whileTrue: [ |next|
-			next := all at: i.
-			current tag = next tag
-				ifFalse:[
-					(current start <= next stop and:[next start <= current stop])
-						ifTrue:[overlaps add: {current. next}]].
-			current := next.
-			i := i + 1].
-	
-	self halt
+
+	[ i <= all size ] whileTrue: [
+		| next |
+		next := all at: i.
+		current tag = next tag ifFalse: [
+			(current start <= next stop and: [ next start <= current stop ])
+				ifTrue: [
+					overlaps add: {
+							current.
+							next } ] ].
+		current := next.
+		i := i + 1 ].
+	^ overlaps collect: [ :array | D3TimeOutsidePharo on: array ]
 ]
 
 { #category : 'accessing' }
