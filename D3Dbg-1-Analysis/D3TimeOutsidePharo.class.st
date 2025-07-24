@@ -13,6 +13,11 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'accessing' }
+D3TimeOutsidePharo class >> externalActivities [
+	^#('Github' 'Tasks browsing')
+]
+
 { #category : 'instance creation' }
 D3TimeOutsidePharo class >> on: anArray [
 
