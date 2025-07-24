@@ -94,9 +94,9 @@ D3Participation >> fixedTimes [
 	^ fixedTimes ifNil: [
 		  | fileRef |
 		  fileRef := self fixedTimesFilename.
-		  fileRef exists
-			  ifTrue: [ STON fromString: fileRef contents ]
-			  ifFalse: [ self collectTimeDiscrepancies ] ]
+		  fixedTimes := fileRef exists
+			                ifTrue: [ STON fromString: fileRef contents ]
+			                ifFalse: [ self collectTimeDiscrepancies ] ]
 ]
 
 { #category : 'accessing' }
