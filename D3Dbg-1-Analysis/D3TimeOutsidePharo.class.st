@@ -42,6 +42,18 @@ D3TimeOutsidePharo >> activityType: anObject [
 	activityType := anObject
 ]
 
+{ #category : 'accessing' }
+D3TimeOutsidePharo >> comment [
+
+	^ comment
+]
+
+{ #category : 'accessing' }
+D3TimeOutsidePharo >> comment: anObject [
+
+	comment := anObject
+]
+
 { #category : 'computation' }
 D3TimeOutsidePharo >> interruptionDuration [
 
