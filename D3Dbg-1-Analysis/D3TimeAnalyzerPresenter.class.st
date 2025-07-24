@@ -88,6 +88,15 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 	idleTimesList selectIndex: 1
 ]
 
+{ #category : 'actions' }
+D3TimeAnalyzerPresenter >> openVLC [
+
+	OSPlatform current runCommand:
+		('python3 openVideo.py video/01.mov {1} {2}' format: {
+				 selectedIdleTime interruptionStart asTime asSeconds.
+				 selectedIdleTime interruptionDuration asSeconds })
+]
+
 { #category : 'accessing - model' }
 D3TimeAnalyzerPresenter >> setModelBeforeInitialization: timeGaps [
 
