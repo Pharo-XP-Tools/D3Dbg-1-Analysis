@@ -20,6 +20,11 @@ Class {
 }
 
 { #category : 'accessing' }
+D3Participation class >> dataPath [
+	^D3ExperimentResults dataPath 
+]
+
+{ #category : 'accessing' }
 D3Participation >> collectTimeDiscrepancies [
 
 	| o m all overlaps i current |
