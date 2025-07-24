@@ -1,3 +1,6 @@
+"
+I show time gaps detected in programming sessions and provide an interface to help deciding if such time gap is a real interruption or a period of activitiy where the user does not move.
+"
 Class {
 	#name : 'D3TimeAnalyzerPresenter',
 	#superclass : 'SpPresenter',

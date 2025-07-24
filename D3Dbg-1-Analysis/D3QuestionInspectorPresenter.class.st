@@ -1,3 +1,6 @@
+"
+I'm an inspector for questions asked by developers when debugging.
+"
 Class {
 	#name : 'D3QuestionInspectorPresenter',
 	#superclass : 'StInspectorPresenter',

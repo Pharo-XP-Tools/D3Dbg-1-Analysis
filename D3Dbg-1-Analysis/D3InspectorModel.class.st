@@ -1,3 +1,6 @@
+"
+I'm a custom inspector model that override slightly the default Pharo one by using a custom object inspector class `D3ObjectInspectorPresenter`.
+"
 Class {
 	#name : 'D3InspectorModel',
 	#superclass : 'StInspectorModel',

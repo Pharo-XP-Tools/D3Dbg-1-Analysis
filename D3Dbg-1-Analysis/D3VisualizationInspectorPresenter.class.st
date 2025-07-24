@@ -1,3 +1,6 @@
+"
+I show debugging visualizations from `https://github.com/bergel/DebuggingSessionAnalysis`.
+"
 Class {
 	#name : 'D3VisualizationInspectorPresenter',
 	#superclass : 'StInspectorPresenter',

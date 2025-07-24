@@ -1,3 +1,8 @@
+"
+I override the default inspector layout:
+- I remove the evaluator, see `D3ObjectInspectorPresenter>>newInspectionForContext:`
+- I remove the header bar, see `D3ObjectInspectorPresenter>>defaultLayout`
+"
 Class {
 	#name : 'D3ObjectInspectorPresenter',
 	#superclass : 'StObjectInspectorPresenter',
