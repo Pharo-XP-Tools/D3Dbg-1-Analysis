@@ -24,8 +24,8 @@ D3TimeAnalyzerPresenter >> defaultLayout [
 		  add: idleTimesList;
 		  add: (SpBoxLayout newTopToBottom
 				   add: (SpBoxLayout newLeftToRight
-						    add: saveButton;
-						    add: openVLCButton;
+						    add: saveButton width: 90;
+						    add: openVLCButton width: 90;
 						    yourself)
 				   expand: false fill: false;
 				   add: (SpBoxLayout newLeftToRight
@@ -57,7 +57,7 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 	decision := self newDropList.
 	decision
 		addItemLabeled: '(unknown time gap)'
-		do: [ selectedIdleTime ifNotNil:[:e| e activityType: nil] ]
+		do: [ selectedIdleTime ifNotNil: [ :e | e activityType: nil ] ]
 		icon: (self iconNamed: #comments).
 	decision
 		addItemLabeled: D3TimeOutsidePharo externalActivities first
@@ -76,10 +76,12 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 	saveButton := self newButton
 		              label: 'Save';
 		              action: [  ];
+		              icon: (self iconNamed: #smallSave);
 		              yourself.
 	openVLCButton := self newButton
 		                 label: 'Open video';
 		                 action: [  ];
+		                    icon: (self iconNamed: #smallPrintIt);
 		                 yourself.
 	timeEventgaps := self newLabel.
 
