@@ -8,7 +8,8 @@ Class {
 	#instVars : [
 		'startEvent',
 		'stopEvent',
-		'activityType'
+		'activityType',
+		'comment'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -44,7 +45,19 @@ D3TimeOutsidePharo >> activityType: anObject [
 { #category : 'computation' }
 D3TimeOutsidePharo >> interruptionDuration [
 
-	^ (startEvent stop min: stopEvent stop) - stopEvent start
+	^ self interruptionStart - self interruptionStop
+]
+
+{ #category : 'computation' }
+D3TimeOutsidePharo >> interruptionStart [
+
+	^ startEvent stop min: stopEvent stop
+]
+
+{ #category : 'computation' }
+D3TimeOutsidePharo >> interruptionStop [
+
+	^ stopEvent start
 ]
 
 { #category : 'printing' }
