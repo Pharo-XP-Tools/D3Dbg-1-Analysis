@@ -104,10 +104,10 @@ D3DataAnalysisPresenter >> displayVisualizationsFor: p [
 { #category : 'initialization' }
 D3DataAnalysisPresenter >> initializePresenters [
 
-	questionAnalysisPresenter := StPresenter new. 
-	questionAnalysisPresenter layout: SpBoxLayout newTopToBottom .
+	questionAnalysisPresenter := StPresenter new.
+	questionAnalysisPresenter layout: SpBoxLayout newTopToBottom.
 
-	taskAnalysisPresenter := StPresenter new. 
+	taskAnalysisPresenter := StPresenter new.
 	taskAnalysisPresenter layout: SpBoxLayout newTopToBottom.
 
 	participantsTable := self newTable.
@@ -128,20 +128,27 @@ D3DataAnalysisPresenter >> initializePresenters [
 			  evaluated: [ :item | item duration ])
 			 width: 75;
 			 yourself).
-
-	participantsTable addColumn: ((SpStringTableColumn
-			  title: 'Task'
-			  evaluated: [ :item | item  ])
-			 displayBackgroundColor: [ :p | self colorForParticipation: p ];
-			 width: 75;
+				participantsTable addColumn:
+		((SpImageTableColumn title: 'Clean' evaluated: [ :item |
+				  self iconNamed: (item unresolvedTimeGaps isEmpty
+							   ifTrue: [ #accept  ]
+							   ifFalse: [#cancel ]) ])
+			 width: 48;
 			 yourself).
+	participantsTable addColumn:
+		((SpStringTableColumn title: 'Task' evaluated: [ :item | item ])
+			 displayBackgroundColor: [ :p | self colorForParticipation: p ];
+			 width: 175;
+			 yourself).		
+
 
 
 	participantsTable items: (experiment participations sort: [ :a :b |
 			 a participationId < b participationId ]).
 
 	participantsTable transmitDo: [ :p |
-		self displayVisualizationsFor: p. self displayQuestionFor: p ].
+		self displayVisualizationsFor: p.
+		self displayQuestionFor: p ]
 
 
 	"buttonBar := self newButtonBar.
@@ -188,7 +195,6 @@ D3DataAnalysisPresenter >> initializePresenters [
 				 label: 'Open';
 				 yourself).
 "
-
 ]
 
 { #category : 'initialization' }
