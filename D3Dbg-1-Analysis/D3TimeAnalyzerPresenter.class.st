@@ -41,6 +41,14 @@ D3TimeAnalyzerPresenter >> defaultLayout [
 		  yourself
 ]
 
+{ #category : 'actions' }
+D3TimeAnalyzerPresenter >> exportToDisk [
+
+	participation fixedTimesFilename writeStream
+		nextPutAll: (STON toString: idleTimes);
+		close
+]
+
 { #category : 'initialization' }
 D3TimeAnalyzerPresenter >> initializePresenters [
 
