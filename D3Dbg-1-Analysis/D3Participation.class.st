@@ -118,7 +118,7 @@ D3Participation >> initializeWithData: aD3DataDictionary [
 	mEventHistory := mDSA history
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'analysis' }
 D3Participation >> listOfSwitch [
 
 	| switch sortedA sortedB |
