@@ -83,13 +83,13 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 
 
 	saveButton := self newButton
-		              label: 'Save';
-		              action: [  ];
+		              label: 'Export';
+		              action: [self exportToDisk ];
 		              icon: (self iconNamed: #smallSave);
 		              yourself.
 	openVLCButton := self newButton
 		                 label: 'Open video';
-		                 action: [  ];
+		                 action: [self openVLC  ];
 		                    icon: (self iconNamed: #smallPrintIt);
 		                 yourself.
 	timeEventgaps := self newLabel.
