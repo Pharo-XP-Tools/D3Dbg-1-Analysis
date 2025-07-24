@@ -212,7 +212,7 @@ D3DataAnalysisPresenter >> menu [
 				  name: 'Fix data';
 				  iconName: #configuration;
 				  action: [
-					  (OCRETaskSorcererPresenter on: participantsTable selectedItem) experimentResultsBrowser:  self;
+					  (D3TimeAnalyzerPresenter on: participantsTable selectedItem)
 						  open ] ];
 		  addItem: [ :anItem |
 			  anItem

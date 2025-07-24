@@ -9,7 +9,8 @@ Class {
 		'decision',
 		'comment',
 		'idleTimes',
-		'selectedIdleTime'
+		'selectedIdleTime',
+		'participation'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -97,10 +98,17 @@ D3TimeAnalyzerPresenter >> openVLC [
 				 selectedIdleTime interruptionDuration asSeconds })
 ]
 
-{ #category : 'accessing - model' }
-D3TimeAnalyzerPresenter >> setModelBeforeInitialization: timeGaps [
+{ #category : 'accessing' }
+D3TimeAnalyzerPresenter >> participation: anObject [
 
-	idleTimes := timeGaps
+	participation := anObject
+]
+
+{ #category : 'accessing - model' }
+D3TimeAnalyzerPresenter >> setModelBeforeInitialization: aParticipation [
+
+	participation := aParticipation.
+	idleTimes := aParticipation fixedTimes
 ]
 
 { #category : 'updating' }
