@@ -128,38 +128,36 @@ D3DataAnalysisPresenter >> initializePresenters [
 			  evaluated: [ :item | item duration ])
 			 width: 75;
 			 yourself).
-				participantsTable addColumn:
-		((SpImageTableColumn title: 'Clean' evaluated: [ :item |
-				  self iconNamed: (item unresolvedTimeGaps isEmpty
-							   ifTrue: [ #accept  ]
-							   ifFalse: [#cancel ]) ])
+
+
+	participantsTable addColumn: (SpCompositeTableColumn new
+			 title: 'Errors';
+			 addColumn: (SpImageTableColumn evaluated: [ :item |
+						  self iconNamed: (item unresolvedTimeGaps isEmpty
+									   ifTrue: [ #accept ]
+									   ifFalse: [ #cancel ]) ]);
+			 addColumn: (SpStringTableColumn evaluated: [ :item |
+						  item unresolvedTimeGaps size printString ]);
 			 width: 48;
 			 yourself).
 	participantsTable addColumn:
 		((SpStringTableColumn title: 'Task' evaluated: [ :item | item ])
 			 displayBackgroundColor: [ :p | self colorForParticipation: p ];
 			 width: 175;
-			 yourself).		
+			 yourself).
 
 
 
 	participantsTable items: (experiment participations sort: [ :a :b |
 			 a participationId < b participationId ]).
 
-	participantsTable transmitDo: [ :p |
-		self displayVisualizationsFor: p.
-		self displayQuestionFor: p ]
-
-
-	"buttonBar := self newButtonBar.
+	participantsTable transmitDo: [ :p | "buttonBar := self newButtonBar.
 	buttonBar
-		placeAtStart;"
-	"		add: (self newButton
+		placeAtStart;""		add: (self newButton
 				 icon: (self application iconNamed: #glamorousZoomIn);
 				 action: [ self openDetailedAnalysis ];
 				 label: 'Explore';
-				 yourself);"
-	"add: (self newButton
+				 yourself);""add: (self newButton
 				 icon: (self application iconNamed: #references);
 				 action: [ self openDiagrams ];
 				 label: 'Diagrams';
@@ -195,6 +193,8 @@ D3DataAnalysisPresenter >> initializePresenters [
 				 label: 'Open';
 				 yourself).
 "
+		self displayVisualizationsFor: p.
+		self displayQuestionFor: p ]
 ]
 
 { #category : 'initialization' }
