@@ -1,12 +1,14 @@
 "
 I represent activities performed outside Pharo in the Echo-1/D3 debugging experiment.
+The activityType field specifies what activity I was actually doing during that time.
 "
 Class {
 	#name : 'D3TimeOutsidePharo',
 	#superclass : 'Object',
 	#instVars : [
 		'startEvent',
-		'stopEvent'
+		'stopEvent',
+		'activityType'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -25,6 +27,18 @@ D3TimeOutsidePharo class >> on: anArray [
 		  startEvent: anArray first;
 		  stopEvent: anArray second;
 		  yourself
+]
+
+{ #category : 'accessing' }
+D3TimeOutsidePharo >> activityType [
+
+	^ activityType
+]
+
+{ #category : 'accessing' }
+D3TimeOutsidePharo >> activityType: anObject [
+
+	activityType := anObject
 ]
 
 { #category : 'computation' }
