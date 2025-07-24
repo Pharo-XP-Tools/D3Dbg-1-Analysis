@@ -11,7 +11,8 @@ Class {
 		'oDSA',
 		'mDSA',
 		'taskName',
-		'questions'
+		'questions',
+		'fixedTimes'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -80,6 +81,23 @@ D3Participation >> durationHumanReadable [
 
 	^ String streamContents: [ :s |
 		  self duration printHumanReadableOn: s ]
+]
+
+{ #category : 'analysis' }
+D3Participation >> fixedTimes [
+
+	^ fixedTimes ifNil: [
+		  | fileRef |
+		  fileRef := self fixedTimesFilename.
+		  fileRef exists
+			  ifTrue: [ STON fromString: fileRef contents ]
+			  ifFalse: [ self collectTimeDiscrepancies ] ]
+]
+
+{ #category : 'accessing' }
+D3Participation >> fixedTimesFilename [
+
+	^self class dataPath / participationId asString
 ]
 
 { #category : 'initialization' }
@@ -208,4 +226,10 @@ D3Participation >> taskName [
 { #category : 'accessing' }
 D3Participation >> taskName: aString [ 
 	taskName := aString
+]
+
+{ #category : 'analysis' }
+D3Participation >> unresolvedTimeGaps [
+
+	^ self fixedTimes select: [ :ft | ft activityType isNil ]
 ]

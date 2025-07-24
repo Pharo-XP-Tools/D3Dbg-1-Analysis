@@ -46,6 +46,12 @@ D3ExperimentResults class >> dataConfiguration [
 ]
 
 { #category : 'accessing' }
+D3ExperimentResults class >> dataPath [
+
+	^ 'echo/data/Echo/' asFileReference
+]
+
+{ #category : 'accessing' }
 D3ExperimentResults class >> experimentName [
 	^'Echo-1'
 ]
