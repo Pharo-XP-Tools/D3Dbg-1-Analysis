@@ -58,7 +58,7 @@ D3Participation >> collectTimeDiscrepancies [
 							next } ] ].
 		current := next.
 		i := i + 1 ].
-	^ overlaps collect: [ :array | D3TimeOutsidePharo on: array ]
+	^ (overlaps collect: [ :array | D3TimeOutsidePharo on: array ]) reject:[:t| t interruptionDuration < 10 seconds]
 ]
 
 { #category : 'accessing' }
@@ -97,6 +97,11 @@ D3Participation >> fixedTimes [
 		  fixedTimes := fileRef exists
 			                ifTrue: [ STON fromString: fileRef contents ]
 			                ifFalse: [ self collectTimeDiscrepancies ] ]
+]
+
+{ #category : 'accessing' }
+D3Participation >> fixedTimes: anObject [
+	fixedTimes := anObject
 ]
 
 { #category : 'accessing' }
