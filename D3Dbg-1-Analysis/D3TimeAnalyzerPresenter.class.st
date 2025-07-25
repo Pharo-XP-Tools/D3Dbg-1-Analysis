@@ -72,17 +72,25 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 		do: [ selectedIdleTime ifNotNil: [ :e | e activityType: nil ] ]
 		icon: (self iconNamed: #comments).
 	decision
-		addItemLabeled: D3TimeOutsidePharo externalActivities first
-		do: [
-			selectedIdleTime activityType:
-				D3TimeOutsidePharo externalActivities first ]
-		icon: (self iconNamed: #github).
+		addItemLabeled:  D3TimeOutsidePharo externalActivities first
+		do: [ selectedIdleTime ifNotNil: [ :e | e activityType:  D3TimeOutsidePharo externalActivities first ] ]
+		icon: (self iconNamed: #collection).
 	decision
 		addItemLabeled: D3TimeOutsidePharo externalActivities second
 		do: [
 			selectedIdleTime activityType:
 				D3TimeOutsidePharo externalActivities second ]
+		icon: (self iconNamed: #github).
+	decision
+		addItemLabeled: D3TimeOutsidePharo externalActivities third
+		do: [
+			selectedIdleTime activityType:
+				D3TimeOutsidePharo externalActivities third ]
 		icon: (self iconNamed: #book).
+			decision
+		addItemLabeled:  D3TimeOutsidePharo externalActivities last
+		do: [ selectedIdleTime ifNotNil: [ :e | e activityType:  D3TimeOutsidePharo externalActivities last ] ]
+		icon: (self iconNamed: #close).
 
 
 	saveButton := self newButton
@@ -102,11 +110,12 @@ D3TimeAnalyzerPresenter >> initializePresenters [
 
 { #category : 'actions' }
 D3TimeAnalyzerPresenter >> openVLC [
-
-	OSPlatform current runCommand:
-		('python3 openVideo.py video/01.mov {1} {2}' format: {
+	OSPlatform current runCommand: 
+		('python3 openVideo.py video/0{3}.mov {1} {2}' format: {
 				 selectedIdleTime interruptionStart asTime asSeconds.
-				 selectedIdleTime interruptionDuration asSeconds })
+				 selectedIdleTime interruptionDuration asSeconds.
+				 participation participationId printString.
+				})
 ]
 
 { #category : 'accessing' }
@@ -135,7 +144,13 @@ D3TimeAnalyzerPresenter >> updateSelectedIdleTime: s [
 	decision selectIndex: decisionIndex.
 	comment text: (s comment ifNil: [ '' ]).
 	timeEventgaps label: (String streamContents: [ :str |
-			 s  interruptionStart printHMSOn: str.
+			 str << '['.
+			 str << s interruptionStart asTime asSeconds printString.
+			str << '-'.
+			str << s interruptionStop  asTime asSeconds printString.
+			 str << ']'.
+			 str space.
+			 s interruptionStart printHMSOn: str.
 			 str << ' and '.
 			 s interruptionStop printHMSOn: str ]).
 	self update

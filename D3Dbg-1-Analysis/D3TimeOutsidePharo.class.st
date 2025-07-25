@@ -18,7 +18,7 @@ Class {
 
 { #category : 'accessing' }
 D3TimeOutsidePharo class >> externalActivities [
-	^#('Github' 'Tasks browsing')
+	^#('Lost events' 'Github' 'Tasks browsing' 'Unrelated/interruption')
 ]
 
 { #category : 'instance creation' }
