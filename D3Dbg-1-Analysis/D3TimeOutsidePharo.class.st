@@ -57,19 +57,19 @@ D3TimeOutsidePharo >> comment: anObject [
 { #category : 'computation' }
 D3TimeOutsidePharo >> interruptionDuration [
 
-	^ self interruptionStart - self interruptionStop
+	^ self interruptionStop - self interruptionStart
 ]
 
 { #category : 'computation' }
 D3TimeOutsidePharo >> interruptionStart [
 
-	^ startEvent stop min: stopEvent stop
+	^ stopEvent start
 ]
 
 { #category : 'computation' }
 D3TimeOutsidePharo >> interruptionStop [
 
-	^ stopEvent start
+	^ startEvent stop min: stopEvent stop
 ]
 
 { #category : 'printing' }

@@ -135,8 +135,8 @@ D3TimeAnalyzerPresenter >> updateSelectedIdleTime: s [
 	decision selectIndex: decisionIndex.
 	comment text: (s comment ifNil: [ '' ]).
 	timeEventgaps label: (String streamContents: [ :str |
-			 s interruptionStop printHMSOn: str.
+			 s  interruptionStart printHMSOn: str.
 			 str << ' and '.
-			 s interruptionStart printHMSOn: str ]).
+			 s interruptionStop printHMSOn: str ]).
 	self update
 ]
