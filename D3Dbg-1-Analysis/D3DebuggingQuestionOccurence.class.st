@@ -27,7 +27,10 @@ D3DebuggingQuestionOccurence class >> fromDictionary: aDictionary [
 	(self slots collect: #name) do: [ :slotName |
 		| accessor |
 		accessor := slotName , ':'.
-		question perform: accessor with: (aDictionary at: slotName) ].
+		slotName = #participationId ifFalse: [
+			question
+				perform: accessor
+				with: (aDictionary at: slotName ifAbsent: [  ]) ] ].
 	^ question
 ]
 
