@@ -18,6 +18,18 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'instance creation' }
+D3DebuggingQuestion class >> fromDictionary: aDictionary [
+
+	| question |
+	question := self new.
+	(self slots collect: #name) do: [ :slotName |
+		| accessor |
+		accessor := slotName , ':'.
+		question perform: accessor with: (aDictionary at: slotName) ].
+	^ question
+]
+
 { #category : 'accessing' }
 D3DebuggingQuestion >> debut_id [
 
