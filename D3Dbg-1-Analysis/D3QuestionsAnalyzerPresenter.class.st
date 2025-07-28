@@ -1,3 +1,6 @@
+"
+Use me to analyze how questions were answered in divergence driven experiment Echo-1
+"
 Class {
 	#name : 'D3QuestionsAnalyzerPresenter',
 	#superclass : 'SpPresenter',
