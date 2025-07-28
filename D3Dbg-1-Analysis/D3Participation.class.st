@@ -229,6 +229,11 @@ D3Participation >> question: aDictionnary [
 ]
 
 { #category : 'accessing' }
+D3Participation >> questions [
+	^ questions
+]
+
+{ #category : 'accessing' }
 D3Participation >> taskName [
 	^ taskName
 ]

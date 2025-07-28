@@ -98,20 +98,45 @@ D3ExperimentResults >> loadParticipations [
 { #category : 'data access' }
 D3ExperimentResults >> loadQuestions [
 
+	| occurrences |
+	occurrences := Dictionary new.
 	questionOccurrences := 'echo/data/questions.json' asFileReference
 		                       readStreamDo: [ :stream |
 			                       STON reader
 				                       on: stream;
 				                       next ].
-	questions := 'echo/data/questions-translated.json' asFileReference
-		             readStreamDo: [ :stream |
-			             STON reader
-				             on: stream;
-				             next ]
+	questions := ('echo/data/questions-translated.json' asFileReference
+		              readStreamDo: [ :stream |
+			              STON reader
+				              on: stream;
+				              next ]) associations collect: [ :association |
+		             D3DebuggingQuestion from: association ].
+	self participations do: [ :p |
+		p questions ifNotNil: [ :qs |
+			qs
+				collect: [ :d |
+					(D3DebuggingQuestionOccurence fromDictionary: d)
+						participantionId: p participationId;
+						yourself ]
+				thenDo: [ :q |
+					(occurrences at: q tag ifAbsentPut: [ OrderedCollection new ])
+						add: q ] ] ].
+
+	questions do: [ :q |
+		q occurrences:
+			(occurrences at: q tag ifAbsent: [ OrderedCollection new ]) ].
+
+	questions := questions sort: [ :a :b |
+		             a occurrences size > b occurrences size ]
 ]
 
 { #category : 'accessing' }
 D3ExperimentResults >> participations [
 
 	^ participations
+]
+
+{ #category : 'accessing' }
+D3ExperimentResults >> questions [
+	^ questions
 ]
