@@ -82,6 +82,19 @@ D3DebuggingQuestionOccurence >> participantionId: anObject [
 	participantionId := anObject
 ]
 
+{ #category : 'printing' }
+D3DebuggingQuestionOccurence >> printOn: aStream [
+
+	aStream << '['.
+	(Time fromSeconds: start)
+		print24: true
+		showSeconds: false
+		on: aStream.
+	aStream << ']'.
+	aStream space.
+	aStream << text capitalized
+]
+
 { #category : 'accessing' }
 D3DebuggingQuestionOccurence >> segments [
 
