@@ -2,9 +2,9 @@ Class {
 	#name : 'D3QuestionsAnalyzerPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'questionsOccurrences',
 		'experiment',
-		'questionsTable'
+		'questionsTable',
+		'colors'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -22,36 +22,47 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
+D3QuestionsAnalyzerPresenter >> initialize [
+
+	self initializeColors.
+	super initialize
+]
+
+{ #category : 'initialization' }
+D3QuestionsAnalyzerPresenter >> initializeColors [
+
+	| color |
+	colors := Dictionary new.
+	color := Color fromHexString: '#72d3fe'.
+
+	experiment questions do: [ :q |
+		colors at: q put: color.
+		color := color lighter ]
+]
+
+{ #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initializePresenters [
 
 	questionsTable := self newTable.
 	questionsTable addColumn:
-		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item key ])
+		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
 			 width: 30;
 			 yourself).
 	questionsTable addColumn: ((SpStringTableColumn
-			  title: 'Question'
-			  evaluated: [ :item | item value ])
+			  title: 'Occ.'
+			  evaluated: [ :item | item occurrences size printString ])
+			 displayBackgroundColor: [ :question | colors at: question ];
 			 width: 30;
+			 displayAlignment: [ :object | SpColumnAlignment center ];
 			 yourself).
-	questionsTable items: experiment questions associations
+	questionsTable addColumn: (SpStringTableColumn
+			 title: 'Question'
+			 evaluated: [ :item | item question ]) yourself.
+	questionsTable items: experiment questions
 ]
 
 { #category : 'accessing - model' }
 D3QuestionsAnalyzerPresenter >> setModelBeforeInitialization: anExperimentResults [
 
-	experiment := anExperimentResults.
-	questionsOccurrences := Dictionary new.
-	experiment participations do: [ :p |
-		p questions ifNotNil: [ :questions |
-			questions
-				collect: [ :d |
-					(D3DebuggingQuestionOccurence fromDictionary: d)
-						participantionId: p participationId;
-						yourself ]
-				thenDo: [ :q |
-					(questionsOccurrences
-						 at: q tag
-						 ifAbsentPut: [ OrderedCollection new ]) add: q ] ] ].
-	self halt
+	experiment := anExperimentResults
 ]
