@@ -4,7 +4,9 @@ Class {
 	#instVars : [
 		'experiment',
 		'questionsTable',
-		'colors'
+		'colors',
+		'occurrencesList',
+		'selectedQuestion'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -17,7 +19,11 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 	^ SpPanedLayout newLeftToRight
 		  positionOfSlider: 30 percent;
 		  add: questionsTable;
-		  add: SpBoxLayout new;
+		  add: (SpPanedLayout newLeftToRight
+				   positionOfSlider: 50 percent;
+				   add: occurrencesList;
+				   add: SpBoxLayout newTopToBottom;
+				   yourself);
 		  yourself
 ]
 
@@ -64,7 +70,13 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable addColumn: (SpStringTableColumn
 			 title: 'Question'
 			 evaluated: [ :item | item question ]) yourself.
-	questionsTable items: experiment questions
+	questionsTable items: experiment questions.
+	
+	occurrencesList := self newList.
+	questionsTable transmitDo: [ :item|
+		selectedQuestion := item.
+		occurrencesList items: item occurrences ]
+	
 ]
 
 { #category : 'accessing - model' }
