@@ -11,7 +11,8 @@ Class {
 		'end',
 		'debut_id',
 		'start',
-		'text'
+		'text',
+		'participantionId'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -64,6 +65,18 @@ D3DebuggingQuestionOccurence >> file [
 D3DebuggingQuestionOccurence >> file: anObject [
 
 	file := anObject
+]
+
+{ #category : 'accessing' }
+D3DebuggingQuestionOccurence >> participantionId [
+
+	^ participantionId
+]
+
+{ #category : 'accessing' }
+D3DebuggingQuestionOccurence >> participantionId: anObject [
+
+	participantionId := anObject
 ]
 
 { #category : 'accessing' }
