@@ -1,8 +1,8 @@
 "
-I represent a question asked during an experiment.
+I represent an occurence of a D3DebuggingQuestion.
 "
 Class {
-	#name : 'D3DebuggingQuestion',
+	#name : 'D3DebuggingQuestionOccurence',
 	#superclass : 'Object',
 	#instVars : [
 		'segments',
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-D3DebuggingQuestion class >> fromDictionary: aDictionary [
+D3DebuggingQuestionOccurence class >> fromDictionary: aDictionary [
 
 	| question |
 	question := self new.
@@ -31,85 +31,85 @@ D3DebuggingQuestion class >> fromDictionary: aDictionary [
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> debut_id [
+D3DebuggingQuestionOccurence >> debut_id [
 
 	^ debut_id
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> debut_id: anObject [
+D3DebuggingQuestionOccurence >> debut_id: anObject [
 
 	debut_id := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> end [
+D3DebuggingQuestionOccurence >> end [
 
 	^ end
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> end: anObject [
+D3DebuggingQuestionOccurence >> end: anObject [
 
 	end := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> file [
+D3DebuggingQuestionOccurence >> file [
 
 	^ file
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> file: anObject [
+D3DebuggingQuestionOccurence >> file: anObject [
 
 	file := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> segments [
+D3DebuggingQuestionOccurence >> segments [
 
 	^ segments
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> segments: anObject [
+D3DebuggingQuestionOccurence >> segments: anObject [
 
 	segments := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> start [
+D3DebuggingQuestionOccurence >> start [
 
 	^ start
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> start: anObject [
+D3DebuggingQuestionOccurence >> start: anObject [
 
 	start := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> tag [
+D3DebuggingQuestionOccurence >> tag [
 
 	^ tag
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> tag: anObject [
+D3DebuggingQuestionOccurence >> tag: anObject [
 
 	tag := anObject
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> text [
+D3DebuggingQuestionOccurence >> text [
 
 	^ text
 ]
 
 { #category : 'accessing' }
-D3DebuggingQuestion >> text: anObject [
+D3DebuggingQuestionOccurence >> text: anObject [
 
 	text := anObject
 ]
