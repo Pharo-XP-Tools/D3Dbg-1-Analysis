@@ -1,3 +1,6 @@
+"
+I model a debugging question asked during a divergence-driven experiment echo-1.
+"
 Class {
 	#name : 'D3DebuggingQuestion',
 	#superclass : 'Object',
