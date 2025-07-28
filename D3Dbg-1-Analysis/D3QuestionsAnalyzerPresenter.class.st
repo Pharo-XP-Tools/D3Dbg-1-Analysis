@@ -22,6 +22,12 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
+D3QuestionsAnalyzerPresenter >> initialExtent [
+	"Initial extent of the SettingBrowser window"
+	^ (900@600) scaledByDisplayScaleFactor
+]
+
+{ #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initialize [
 
 	self initializeColors.
@@ -65,4 +71,9 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 D3QuestionsAnalyzerPresenter >> setModelBeforeInitialization: anExperimentResults [
 
 	experiment := anExperimentResults
+]
+
+{ #category : 'TOREMOVE' }
+D3QuestionsAnalyzerPresenter >> title [
+	^'Divergence Driven Question Analyzer'
 ]
