@@ -6,6 +6,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'participations',
+		'questionOccurrences',
 		'questions'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
@@ -73,7 +74,7 @@ D3ExperimentResults >> load [
 	self loadParticipations .
 	self loadQuestions .
 	
-	question_by_file := (questions at: 'questions_par_fichier').
+	question_by_file := (questionOccurrences at: 'questions_par_fichier').
 	question_by_file keysDo: [ :e | (participations at: ((e truncateTo:2) asNumber ))question: (question_by_file at:e) ]
 ]
 
@@ -97,7 +98,12 @@ D3ExperimentResults >> loadParticipations [
 { #category : 'data access' }
 D3ExperimentResults >> loadQuestions [
 
-	questions := 'echo/data/questions.json' asFileReference
+	questionOccurrences := 'echo/data/questions.json' asFileReference
+		                       readStreamDo: [ :stream |
+			                       STON reader
+				                       on: stream;
+				                       next ].
+	questions := 'echo/data/questions-translated.json' asFileReference
 		             readStreamDo: [ :stream |
 			             STON reader
 				             on: stream;
