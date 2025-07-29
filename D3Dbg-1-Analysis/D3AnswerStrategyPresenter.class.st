@@ -96,6 +96,17 @@ D3AnswerStrategyPresenter >> initializePresenters [
 	toolsUsedInModifiedTable := self toolTableFor: 'modified'
 ]
 
+{ #category : 'actions' }
+D3AnswerStrategyPresenter >> openVLC [
+
+	[
+	OSPlatform current runCommand:
+		('python3 openVideo.py video/0{3}.mov {1} {2}' format: {
+				 questionOccurrence start.
+				 15.
+				 questionOccurrence participationId printString }) ] fork
+]
+
 { #category : 'accessing' }
 D3AnswerStrategyPresenter >> questionOccurrence: anObject [
 
