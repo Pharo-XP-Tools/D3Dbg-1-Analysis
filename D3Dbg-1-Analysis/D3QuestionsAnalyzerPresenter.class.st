@@ -10,7 +10,9 @@ Class {
 		'colors',
 		'occurrencesList',
 		'selectedQuestion',
-		'answerAnalyzer'
+		'answerAnalyzer',
+		'totalQuestions',
+		'totalOccurrences'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -22,7 +24,12 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 
 	^ SpPanedLayout newLeftToRight
 		  positionOfSlider: 35 percent;
-		  add: questionsTable;
+		  add: (SpBoxLayout newTopToBottom
+				   add: ('{1} questions, {2} occurrences.' format: {
+								    totalQuestions printString.
+								    totalOccurrences printString })
+				   expand: false fill: false;
+				   add: questionsTable);
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: 50 percent;
 				   add: occurrencesList;
@@ -99,7 +106,10 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 { #category : 'accessing - model' }
 D3QuestionsAnalyzerPresenter >> setModelBeforeInitialization: anExperimentResults [
 
-	experiment := anExperimentResults
+	experiment := anExperimentResults.
+	totalQuestions := experiment questions size.
+	totalOccurrences := ((experiment questions collect: #occurrences)
+		                     collect: #size) sum
 ]
 
 { #category : 'TOREMOVE' }
