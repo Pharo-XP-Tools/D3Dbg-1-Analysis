@@ -129,5 +129,7 @@ D3AnswerStrategyPresenter >> toolTableFor: originOrModified [
 { #category : 'accessing' }
 D3AnswerStrategyPresenter >> tools: anObject [
 
-	tools := anObject
+	tools := anObject.
+	toolsUsedInOriginTable presenters second items: (tools at: 'origin').
+	toolsUsedInModifiedTable presenters second items: (tools at: 'modified')
 ]
