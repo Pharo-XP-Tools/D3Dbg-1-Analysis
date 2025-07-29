@@ -14,6 +14,14 @@ Class {
 	#tag : 'Model'
 }
 
+{ #category : 'accessing' }
+D3ExperimentResults class >> analysisDataPath [
+
+	^ 'echo/data/Echo/answers' asFileReference
+		  ensureCreateDirectory;
+		  yourself
+]
+
 { #category : 'raw data' }
 D3ExperimentResults class >> dataConfiguration [
 
@@ -55,6 +63,16 @@ D3ExperimentResults class >> dataPath [
 { #category : 'accessing' }
 D3ExperimentResults class >> experimentName [
 	^'Echo-1'
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
+
+	| fileRef |
+	fileRef := self class analysisDataPath / aQuestionOccurrence uuid.
+	^ fileRef exists
+		  ifTrue: [ STON fromString: fileRef contents ]
+		  ifFalse: [ D3AnswerStrategy new ]
 ]
 
 { #category : 'data access' }
@@ -139,4 +157,12 @@ D3ExperimentResults >> participations [
 { #category : 'accessing' }
 D3ExperimentResults >> questions [
 	^ questions
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrence: aQuestionOccurrence [
+
+	| fileRef |
+	fileRef := self class analysisDataPath / aQuestionOccurrence uuid.
+	fileRef writeStream nextPutAll: (STON toString: analysis)
 ]
