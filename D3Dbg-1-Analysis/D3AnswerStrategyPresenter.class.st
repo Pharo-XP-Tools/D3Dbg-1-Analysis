@@ -49,6 +49,14 @@ D3AnswerStrategyPresenter >> experiment: anObject [
 	experiment := anObject
 ]
 
+{ #category : 'actions' }
+D3AnswerStrategyPresenter >> exportToDisk [
+
+	experiment
+		saveAnswerStrategyAnalysis: answerStrategy
+		forQuestionOccurrence: questionOccurrence
+]
+
 { #category : 'initialization' }
 D3AnswerStrategyPresenter >> initializePresenters [
 
