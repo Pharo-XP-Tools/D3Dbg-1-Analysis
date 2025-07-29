@@ -78,7 +78,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable items: experiment questions.
 
 	occurrencesList := self newList.
-	questionsTable transmitDo: [ :item |
+	questionsTable transmitDo: [ :item | 
 		selectedQuestion := item.
 		occurrencesList items: item occurrences ].
 	occurrencesList transmitDo: [ :item |
@@ -87,6 +87,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 				                  (experiment answerStrategyAnalysisFor: item).
 			answerAnalyzer questionOccurrence: item.
 			answerAnalyzer experiment: experiment.
+			answerAnalyzer tools: (experiment usedToolsFor: item).
 			self layout: self defaultLayout ] ]
 ]
 

@@ -63,8 +63,6 @@ D3AnswerStrategyPresenter >> initializePresenters [
 	comment := self newText.
 	comment text: answerStrategy comment.
 	
-	tools := answerStrategy usedTools.
-	
 	isEchoCheckbox := self newCheckBox.
 	isEchoCheckbox state: answerStrategy isEcho.
 	isEchoCheckbox whenActivatedDo: [ answerStrategy isEcho: true ].
@@ -93,4 +91,10 @@ D3AnswerStrategyPresenter >> questionOccurrence: anObject [
 D3AnswerStrategyPresenter >> setModelBeforeInitialization: anAnswerStrategy [
 
 	answerStrategy := anAnswerStrategy
+]
+
+{ #category : 'accessing' }
+D3AnswerStrategyPresenter >> tools: anObject [
+
+	tools := anObject
 ]
