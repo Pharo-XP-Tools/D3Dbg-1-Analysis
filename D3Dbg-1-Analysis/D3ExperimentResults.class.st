@@ -166,3 +166,16 @@ D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrenc
 	fileRef := self class analysisDataPath / aQuestionOccurrence uuid.
 	fileRef writeStream nextPutAll: (STON toString: analysis)
 ]
+
+{ #category : 'as yet unclassified' }
+D3ExperimentResults >> usedToolsFor: aD3DebuggingQuestionOccurence [
+
+	| participation tools |
+	participation := participations detect: [ :p |
+		                 p participationId
+		                 = aD3DebuggingQuestionOccurence participantionId ].
+	tools := Dictionary new.
+	tools at: 'origin' put: participation oEventHistory usedTools.
+	tools at: 'modified' put: participation mEventHistory usedTools.
+	^tools
+]
