@@ -8,7 +8,8 @@ Class {
 		'usedTools',
 		'comment',
 		'isEcho',
-		'questionTag'
+		'questionTag',
+		'participationId'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -18,7 +19,7 @@ Class {
 { #category : 'accessing' }
 D3AnswerStrategy >> comment [
 
-	^ comment
+	^ comment ifNil: [ comment := '' ]
 ]
 
 { #category : 'accessing' }
@@ -40,6 +41,18 @@ D3AnswerStrategy >> isEcho: anObject [
 ]
 
 { #category : 'accessing' }
+D3AnswerStrategy >> participationId [
+
+	^ participationId
+]
+
+{ #category : 'accessing' }
+D3AnswerStrategy >> participationId: anObject [
+
+	participationId := anObject
+]
+
+{ #category : 'accessing' }
 D3AnswerStrategy >> questionTag [
 
 	^ questionTag
@@ -54,7 +67,7 @@ D3AnswerStrategy >> questionTag: anObject [
 { #category : 'accessing' }
 D3AnswerStrategy >> usedTools [
 
-	^ usedTools
+	^ usedTools ifNil: [ usedTools := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
