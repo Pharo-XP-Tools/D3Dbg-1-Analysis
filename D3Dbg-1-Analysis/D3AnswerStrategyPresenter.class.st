@@ -35,7 +35,7 @@ D3AnswerStrategyPresenter >> defaultLayout [
 		  add: (SpBoxLayout newTopToBottom
 				   add: (SpBoxLayout newLeftToRight
 						    add: 'Analysis:' expand: false fill: false;
-						    add: isEchoCheckbox;
+						    add: isEchoCheckbox expand: false fill: false;
 						    yourself)
 				   expand: false fill: false;
 				   add: comment;
@@ -69,7 +69,7 @@ D3AnswerStrategyPresenter >> initializePresenters [
 	isEchoCheckbox state: answerStrategy isEcho.
 	isEchoCheckbox whenActivatedDo: [ answerStrategy isEcho: true ].
 	isEchoCheckbox whenDeactivatedDo: [ answerStrategy isEcho: false ].
-	isEchoCheckbox label: 'isEcho'.
+	isEchoCheckbox label: 'is echo'.
 	
 	saveButton := self newButton
 		              label: 'Export';
