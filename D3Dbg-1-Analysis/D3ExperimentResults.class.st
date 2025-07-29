@@ -164,7 +164,9 @@ D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrenc
 
 	| fileRef |
 	fileRef := self class analysisDataPath / aQuestionOccurrence uuid.
-	fileRef writeStream nextPutAll: (STON toString: analysis)
+	fileRef writeStream
+		nextPutAll: (STON toString: analysis);
+		close
 ]
 
 { #category : 'as yet unclassified' }
