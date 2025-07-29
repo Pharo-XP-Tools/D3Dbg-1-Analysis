@@ -9,7 +9,8 @@ Class {
 		'questionsTable',
 		'colors',
 		'occurrencesList',
-		'selectedQuestion'
+		'selectedQuestion',
+		'answerAnalyzer'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -25,7 +26,7 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: 50 percent;
 				   add: occurrencesList;
-				   add: SpBoxLayout newTopToBottom;
+				   add: answerAnalyzer;
 				   yourself);
 		  yourself
 ]
@@ -58,6 +59,7 @@ D3QuestionsAnalyzerPresenter >> initializeColors [
 { #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initializePresenters [
 
+	answerAnalyzer := SpBoxLayout newTopToBottom.
 	questionsTable := self newTable.
 	questionsTable addColumn:
 		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
@@ -74,12 +76,18 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 			 title: 'Question'
 			 evaluated: [ :item | item question ]) yourself.
 	questionsTable items: experiment questions.
-	
+
 	occurrencesList := self newList.
-	questionsTable transmitDo: [ :item|
+	questionsTable transmitDo: [ :item |
 		selectedQuestion := item.
-		occurrencesList items: item occurrences ]
-	
+		occurrencesList items: item occurrences ].
+	occurrencesList transmitDo: [ :item |
+		item ifNotNil: [
+			answerAnalyzer := D3AnswerStrategyPresenter on:
+				                  (experiment answerStrategyAnalysisFor: item).
+			answerAnalyzer questionOccurrence: item.
+			answerAnalyzer experiment: experiment.
+			self layout: self defaultLayout ] ]
 ]
 
 { #category : 'accessing - model' }
