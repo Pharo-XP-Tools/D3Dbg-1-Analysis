@@ -12,7 +12,9 @@ Class {
 		'vlcButton',
 		'answerStrategy',
 		'experiment',
-		'questionOccurrence'
+		'questionOccurrence',
+		'toolsUsedInOriginTable',
+		'toolsUsedInModifiedTable'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
@@ -30,7 +32,10 @@ D3AnswerStrategyPresenter >> defaultLayout [
 		  expand: false fill: false;
 		  add: (SpBoxLayout newTopToBottom
 				   add: 'Used tools (check as many):' expand: false fill: false;
-				   add: SpBoxLayout newTopToBottom;
+				   add: (SpBoxLayout newLeftToRight
+						    add: toolsUsedInOriginTable;
+						    add: toolsUsedInModifiedTable;
+						    yourself);
 				   yourself);
 		  add: (SpBoxLayout newTopToBottom
 				   add: (SpBoxLayout newLeftToRight
@@ -79,6 +84,9 @@ D3AnswerStrategyPresenter >> initializePresenters [
 		                 action: [self openVLC  ];
 		                    icon: (self iconNamed: #smallPrintIt);
 		                 yourself.
+		
+	toolsUsedInOriginTable := self toolTableFor: 'origin'.
+	toolsUsedInModifiedTable := self toolTableFor: 'modified'.
 ]
 
 { #category : 'accessing' }
@@ -91,6 +99,31 @@ D3AnswerStrategyPresenter >> questionOccurrence: anObject [
 D3AnswerStrategyPresenter >> setModelBeforeInitialization: anAnswerStrategy [
 
 	answerStrategy := anAnswerStrategy
+]
+
+{ #category : 'initialization' }
+D3AnswerStrategyPresenter >> toolTableFor: originOrModified [
+
+	| table box |
+	table := self newTable.
+	table
+		addColumn: ((SpCheckBoxTableColumn
+				  title: ' '
+				  evaluated: [ :item |
+					  answerStrategy isToolUsed: item for: originOrModified ])
+				 onActivation: [ :item |
+					 answerStrategy toolUsed: item for: originOrModified ];
+				 onDeactivation: [ :item |
+					 answerStrategy toolNotUsed: item for: originOrModified ];
+				 width: 20;
+				 yourself);
+		addColumn:
+			(SpStringTableColumn title: 'Tool' evaluated: [ :item | item ])
+				yourself.
+	box := SpBoxLayout newTopToBottom.
+	box add: originOrModified capitalized expand: false fill: false.
+	box add: table.
+	^ box 
 ]
 
 { #category : 'accessing' }
