@@ -41,6 +41,14 @@ D3AnswerStrategy >> isEcho: anObject [
 ]
 
 { #category : 'accessing' }
+D3AnswerStrategy >> isToolUsed: item for: originOrModified [
+
+	^ (self usedTools
+		   at: originOrModified
+		   ifAbsentPut: [ Dictionary new ]) at: item ifAbsentPut: [ false ]
+]
+
+{ #category : 'accessing' }
 D3AnswerStrategy >> participationId [
 
 	^ participationId
@@ -65,9 +73,25 @@ D3AnswerStrategy >> questionTag: anObject [
 ]
 
 { #category : 'accessing' }
+D3AnswerStrategy >> toolNotUsed: item for: originOrModified [
+
+	^ (self usedTools
+		   at: originOrModified
+		   ifAbsentPut: [ Dictionary new ]) at: item put: false
+]
+
+{ #category : 'accessing' }
+D3AnswerStrategy >> toolUsed: item for: originOrModified [
+
+	^ (self usedTools
+		   at: originOrModified
+		   ifAbsentPut: [ Dictionary new ]) at: item put: true
+]
+
+{ #category : 'accessing' }
 D3AnswerStrategy >> usedTools [
 
-	^ usedTools ifNil: [ usedTools := OrderedCollection new ]
+	^ usedTools ifNil: [ usedTools := Dictionary new ]
 ]
 
 { #category : 'accessing' }
