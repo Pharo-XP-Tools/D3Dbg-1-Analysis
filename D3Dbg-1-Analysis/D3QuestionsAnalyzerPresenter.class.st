@@ -21,7 +21,7 @@ Class {
 D3QuestionsAnalyzerPresenter >> defaultLayout [
 
 	^ SpPanedLayout newLeftToRight
-		  positionOfSlider: 30 percent;
+		  positionOfSlider: 35 percent;
 		  add: questionsTable;
 		  add: (SpPanedLayout newLeftToRight
 				   positionOfSlider: 50 percent;
@@ -34,7 +34,7 @@ D3QuestionsAnalyzerPresenter >> defaultLayout [
 { #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initialExtent [
 	"Initial extent of the SettingBrowser window"
-	^ (900@600) scaledByDisplayScaleFactor
+	^ (1200@700) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -61,8 +61,13 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 
 	answerAnalyzer := SpBoxLayout newTopToBottom.
 	questionsTable := self newTable.
+	questionsTable addColumn: ((SpIndexTableColumn title: '')
+			 width: 15;
+			 yourself).
 	questionsTable addColumn:
 		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
+			 displayBackgroundColor: [ :question | Color lightYellow ];
+			 displayAlignment: [ :object | SpColumnAlignment center ];
 			 width: 30;
 			 yourself).
 	questionsTable addColumn: ((SpStringTableColumn
@@ -78,7 +83,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable items: experiment questions.
 
 	occurrencesList := self newList.
-	questionsTable transmitDo: [ :item | 
+	questionsTable transmitDo: [ :item |
 		selectedQuestion := item.
 		occurrencesList items: item occurrences ].
 	occurrencesList transmitDo: [ :item |
