@@ -19,6 +19,30 @@ Class {
 	#tag : 'Presenters'
 }
 
+{ #category : 'layout' }
+D3AnswerStrategyPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		  add: (SpBoxLayout newLeftToRight
+				   add: saveButton width: 100;
+				   add: vlcButton width: 100;
+				   yourself)
+		  expand: false fill: false;
+		  add: (SpBoxLayout newTopToBottom
+				   add: 'Used tools (check as many):' expand: false fill: false;
+				   add: SpBoxLayout newTopToBottom;
+				   yourself);
+		  add: (SpBoxLayout newTopToBottom
+				   add: (SpBoxLayout newLeftToRight
+						    add: 'Analysis:' expand: false fill: false;
+						    add: isEchoCheckbox;
+						    yourself)
+				   expand: false fill: false;
+				   add: comment;
+				   yourself);
+		  yourself
+]
+
 { #category : 'accessing' }
 D3AnswerStrategyPresenter >> experiment: anObject [
 
