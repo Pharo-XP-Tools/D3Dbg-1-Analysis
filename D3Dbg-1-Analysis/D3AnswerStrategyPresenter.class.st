@@ -10,12 +10,20 @@ Class {
 		'isEchoCheckbox',
 		'saveButton',
 		'vlcButton',
-		'answerStrategy'
+		'answerStrategy',
+		'experiment',
+		'questionOccurrence'
 	],
 	#category : 'D3Dbg-1-Analysis-Presenters',
 	#package : 'D3Dbg-1-Analysis',
 	#tag : 'Presenters'
 }
+
+{ #category : 'accessing' }
+D3AnswerStrategyPresenter >> experiment: anObject [
+
+	experiment := anObject
+]
 
 { #category : 'initialization' }
 D3AnswerStrategyPresenter >> initializePresenters [
@@ -41,4 +49,16 @@ D3AnswerStrategyPresenter >> initializePresenters [
 		                 action: [self openVLC  ];
 		                    icon: (self iconNamed: #smallPrintIt);
 		                 yourself.
+]
+
+{ #category : 'accessing' }
+D3AnswerStrategyPresenter >> questionOccurrence: anObject [
+
+	questionOccurrence := anObject
+]
+
+{ #category : 'accessing - model' }
+D3AnswerStrategyPresenter >> setModelBeforeInitialization: anAnswerStrategy [
+
+	answerStrategy := anAnswerStrategy
 ]
