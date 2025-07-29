@@ -26,7 +26,7 @@ D3AnswerStrategyPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		  add: (SpBoxLayout newLeftToRight
-				   add: saveButton width: 100;
+				   "add: saveButton width: 100;"
 				   add: vlcButton width: 100;
 				   yourself)
 		  expand: false fill: false;
@@ -67,26 +67,33 @@ D3AnswerStrategyPresenter >> initializePresenters [
 
 	comment := self newText.
 	comment text: answerStrategy comment.
-	
+	comment whenTextChangedDo: [
+		answerStrategy comment: comment text.
+		self exportToDisk ].
+
 	isEchoCheckbox := self newCheckBox.
 	isEchoCheckbox state: answerStrategy isEcho.
-	isEchoCheckbox whenActivatedDo: [ answerStrategy isEcho: true ].
-	isEchoCheckbox whenDeactivatedDo: [ answerStrategy isEcho: false ].
+	isEchoCheckbox whenActivatedDo: [
+		answerStrategy isEcho: true.
+		self exportToDisk ].
+	isEchoCheckbox whenDeactivatedDo: [
+		answerStrategy isEcho: false.
+		self exportToDisk ].
 	isEchoCheckbox label: 'is echo'.
-	
+
 	saveButton := self newButton
 		              label: 'Export';
-		              action: [self exportToDisk ];
+		              action: [ self exportToDisk ];
 		              icon: (self iconNamed: #smallSave);
 		              yourself.
 	vlcButton := self newButton
-		                 label: 'Open video';
-		                 action: [self openVLC  ];
-		                    icon: (self iconNamed: #smallPrintIt);
-		                 yourself.
-		
+		             label: 'Open video';
+		             action: [ self openVLC ];
+		             icon: (self iconNamed: #smallPrintIt);
+		             yourself.
+
 	toolsUsedInOriginTable := self toolTableFor: 'origin'.
-	toolsUsedInModifiedTable := self toolTableFor: 'modified'.
+	toolsUsedInModifiedTable := self toolTableFor: 'modified'
 ]
 
 { #category : 'accessing' }
@@ -112,9 +119,11 @@ D3AnswerStrategyPresenter >> toolTableFor: originOrModified [
 				  evaluated: [ :item |
 					  answerStrategy isToolUsed: item for: originOrModified ])
 				 onActivation: [ :item |
-					 answerStrategy toolUsed: item for: originOrModified ];
+					 answerStrategy toolUsed: item for: originOrModified.
+					 self exportToDisk ];
 				 onDeactivation: [ :item |
-					 answerStrategy toolNotUsed: item for: originOrModified ];
+					 answerStrategy toolNotUsed: item for: originOrModified.
+					 self exportToDisk ];
 				 width: 20;
 				 yourself);
 		addColumn:
@@ -123,7 +132,7 @@ D3AnswerStrategyPresenter >> toolTableFor: originOrModified [
 	box := SpBoxLayout newTopToBottom.
 	box add: originOrModified capitalized expand: false fill: false.
 	box add: table.
-	^ box 
+	^ box
 ]
 
 { #category : 'accessing' }
