@@ -142,3 +142,14 @@ D3DebuggingQuestionOccurence >> text: anObject [
 
 	text := anObject
 ]
+
+{ #category : 'accessing' }
+D3DebuggingQuestionOccurence >> uuid [
+
+	^ String streamContents: [ :str |
+		  str << tag.
+		  str << '-'.
+		  str << participantionId printString.
+		  str << '-'.
+		  str << start printString ]
+]
