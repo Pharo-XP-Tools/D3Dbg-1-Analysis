@@ -30,7 +30,7 @@ D3AnswerStrategy >> comment: anObject [
 { #category : 'accessing' }
 D3AnswerStrategy >> isEcho [
 
-	^ isEcho
+	^ isEcho ifNil:[isEcho := false]
 ]
 
 { #category : 'accessing' }
