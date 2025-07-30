@@ -54,13 +54,7 @@ D3QuestionsAnalyzerPresenter >> initialize [
 { #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initializeColors [
 
-	| color |
-	colors := Dictionary new.
-	color := Color fromHexString: '#72d3fe'.
-
-	experiment questions do: [ :q |
-		colors at: q put: color.
-		color := color lighter ]
+	colors := experiment questionsColorsBase: '#72d3fe'
 ]
 
 { #category : 'initialization' }

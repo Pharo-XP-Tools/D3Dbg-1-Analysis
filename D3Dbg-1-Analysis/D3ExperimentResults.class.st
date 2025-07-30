@@ -159,6 +159,19 @@ D3ExperimentResults >> questions [
 	^ questions
 ]
 
+{ #category : 'accessing' }
+D3ExperimentResults >> questionsColorsBase: aHexString [
+
+	| colors color |
+	colors := Dictionary new.
+	color := Color fromHexString: aHexString.
+
+	self questions do: [ :q |
+		colors at: q put: color.
+		color := color lighter ].
+	^ colors
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrence: aQuestionOccurrence [
 
@@ -169,7 +182,7 @@ D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrenc
 		close
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'data access' }
 D3ExperimentResults >> usedToolsFor: aD3DebuggingQuestionOccurence [
 
 	| participation tools |
