@@ -93,6 +93,16 @@ D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 		  ifFalse: [ D3AnswerStrategy new ]
 ]
 
+{ #category : 'as yet unclassified' }
+D3ExperimentResults >> categorizeQuestions [
+
+	| categories |
+	categories := self class dataClassification.
+	questions do: [ :q |
+		categories keysAndValuesDo: [ :k :v |
+			(v includes: q tag asNumber) ifTrue: [ q questionCategory: k ] ] ]
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> dataConfiguration [
 	^self class dataConfiguration
@@ -162,8 +172,12 @@ D3ExperimentResults >> loadQuestions [
 		q occurrences:
 			(occurrences at: q tag ifAbsent: [ OrderedCollection new ]) ].
 
-	questions := questions sort: [ :a :b |
-		             a occurrences size > b occurrences size ]
+	questions := questions asOrderedCollection.
+	self categorizeQuestions.
+	self mergeQuestions.
+	questions := (questions sort: [ :a :b |
+		              a occurrences size > b occurrences size ])
+		             asOrderedCollection
 ]
 
 { #category : 'constants' }
@@ -175,6 +189,27 @@ D3ExperimentResults >> marker [
 				   "border: self border;"size: 10;
 				   yourself);
 		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+D3ExperimentResults >> mergeQuestions [
+
+	| dataMerge questionsToMerge |
+	dataMerge := self class dataMerge.
+	questionsToMerge := questions select: [ :q |
+		                    dataMerge keys includes: q tag asNumber ].
+	questionsToMerge do: [ :q |
+		| mergeList |
+		mergeList := questions select: [ :mq |
+			             (dataMerge at: q tag asNumber) includes:
+				             mq tag asNumber ].
+		mergeList do: [ :mq |
+			mq tag: q tag.
+			q occurrences addAll: mq occurrences.
+			
+			questions remove: mq ] ].
+
+
 ]
 
 { #category : 'accessing' }
