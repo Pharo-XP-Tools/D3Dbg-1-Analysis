@@ -148,10 +148,74 @@ D3ExperimentResults >> loadQuestions [
 		             a occurrences size > b occurrences size ]
 ]
 
+{ #category : 'constants' }
+D3ExperimentResults >> marker [
+
+	^ RSMarker new
+		  shape: (RSShapeFactory triangle
+				   color: Color red;
+				   "border: self border;"size: 10;
+				   yourself);
+		  yourself
+]
+
 { #category : 'accessing' }
 D3ExperimentResults >> participations [
 
 	^ participations
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> questionSequences [
+
+	^ ((participations collect: #questions) reject: #isNil) collect: [
+		  :qs |
+		  (qs collect: [ :d |
+			   (D3DebuggingQuestionOccurence fromDictionary: d) tag asInteger ])
+			  reject: #isNil ]
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> questionSequencesGraph [
+
+	| connections sequences canvas shapes colors |
+	connections := Dictionary new.
+	sequences := self questionSequences.
+	sequences do: [ :s |
+		2 to: s size do: [ :i |
+			(connections at: (s at: i) ifAbsentPut: [ OrderedCollection new ])
+				add: (s at: i - 1) ] ].
+
+	canvas := RSCanvas new.
+
+	colors := ((self questionsColorsBase: '#ff0000') associations
+		           collect: [ :ass | ass key tag asNumber -> ass value ])
+		          asDictionary.
+	shapes := connections keys asArray collect: [ :m |
+		          RSBox new
+			          labeled;
+			          size: (10 max: 4 * (connections at: m) size);
+			          model: m;
+			          draggable;
+			          withBorder;
+			          color: (colors at: m ifAbsent: [ Color white ]);
+			          yourself ].
+	RSLineBuilder line
+		beDirectional;
+		markerStart: self marker;
+		withBorderAttachPoint;
+		shapes: shapes;
+		canvas: canvas;
+		useAssociations: ((connections keys collect: [ :k |
+					  (connections at: k) collect: [ :v | k -> v ] ]) flattened
+				 reject: [ :ass | ass key = ass value ]).
+	canvas edges do: #withBorder.
+	canvas addAll: shapes.
+	canvas shapes @ RSHighlightable red.
+	RSWeightedCircleLayout new on: shapes. "gapSize: 40; "
+	canvas @ RSCanvasController.
+	canvas zoomToFit.
+	^ canvas
 ]
 
 { #category : 'accessing' }
