@@ -234,6 +234,18 @@ D3Participation >> questions [
 ]
 
 { #category : 'accessing' }
+D3Participation >> startTime [
+
+	^ self oEventHistory startTime min: mEventHistory startTime
+]
+
+{ #category : 'accessing' }
+D3Participation >> stopTime [
+
+	^ self oEventHistory stopTime max: mEventHistory stopTime
+]
+
+{ #category : 'accessing' }
 D3Participation >> taskName [
 	^ taskName
 ]
@@ -246,10 +258,7 @@ D3Participation >> taskName: aString [
 { #category : 'accessing' }
 D3Participation >> totalDuration [
 
-	^ (self oEventHistory stopTime max: mEventHistory stopTime) asSeconds
-	  -
-	  (self oEventHistory startTime min: mEventHistory startTime)
-		  asSeconds
+	^ self stopTime asSeconds - self startTime asSeconds
 ]
 
 { #category : 'analysis' }
