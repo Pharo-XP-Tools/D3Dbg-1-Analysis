@@ -110,7 +110,7 @@ D3ExperimentResults >> averageQuestionPerMinute [
 			   p totalDuration asDuration asMinutes ]) sum
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'data access' }
 D3ExperimentResults >> categorizeQuestions [
 
 	| categories |
@@ -208,7 +208,7 @@ D3ExperimentResults >> marker [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'data access' }
 D3ExperimentResults >> mergeQuestions [
 
 	| dataMerge questionsToMerge |
