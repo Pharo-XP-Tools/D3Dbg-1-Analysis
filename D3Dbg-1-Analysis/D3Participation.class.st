@@ -243,6 +243,15 @@ D3Participation >> taskName: aString [
 	taskName := aString
 ]
 
+{ #category : 'accessing' }
+D3Participation >> totalDuration [
+
+	^ (self oEventHistory stopTime max: mEventHistory stopTime) asSeconds
+	  -
+	  (self oEventHistory startTime min: mEventHistory startTime)
+		  asSeconds
+]
+
 { #category : 'analysis' }
 D3Participation >> unresolvedTimeGaps [
 
