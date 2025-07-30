@@ -22,6 +22,13 @@ D3ExperimentResults class >> analysisDataPath [
 		  yourself
 ]
 
+{ #category : 'as yet unclassified' }
+D3ExperimentResults class >> dataClassification [
+	^{#echo -> #(6 15 14 7 18 43 53 54 45 12 42 55).
+	#debug -> #(3 4 5 16 49 11 44).
+	#comprehension -> #(8 19 23 20 25 26 27 28 30 32 36 41 46 52)} asDictionary 
+]
+
 { #category : 'raw data' }
 D3ExperimentResults class >> dataConfiguration [
 
@@ -52,6 +59,16 @@ D3ExperimentResults class >> dataConfiguration [
 		  at: 'Class Blueprint' put: blueprintParticipations asDictionary;
 		  at: 'Microdown' put: microdownParticipations asDictionary;
 		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+D3ExperimentResults class >> dataMerge [
+
+	^ {
+		  (6 -> #( 15 )).
+		  (7 -> #( 14 )).
+		  (3 -> #( 4 5 16 49 )).
+		  (19 -> #( 23 )) } asDictionary
 ]
 
 { #category : 'accessing' }
