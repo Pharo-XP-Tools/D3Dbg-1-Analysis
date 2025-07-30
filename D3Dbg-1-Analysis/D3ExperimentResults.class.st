@@ -94,6 +94,13 @@ D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 ]
 
 { #category : 'descriptive statistics' }
+D3ExperimentResults >> averageDuration [
+
+	^ (participations collect: [ :p | p totalDuration asDuration ])
+		  average
+]
+
+{ #category : 'descriptive statistics' }
 D3ExperimentResults >> averageQuestionByParticipant [
 
 	^ ((questions collect: #occurrences) flattened size
@@ -208,6 +215,13 @@ D3ExperimentResults >> marker [
 		  yourself
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> medianDuration [
+
+	^ (participations collect: [ :p | p totalDuration asDuration ])
+		  median
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> mergeQuestions [
 
@@ -227,6 +241,13 @@ D3ExperimentResults >> mergeQuestions [
 			questions remove: mq ] ].
 
 
+]
+
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> minMaxDuration [
+	|durations|
+	durations := (participations collect: [ :p | p totalDuration asDuration ]).
+	^{durations min. durations max}
 ]
 
 { #category : 'accessing' }
