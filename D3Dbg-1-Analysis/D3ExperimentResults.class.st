@@ -256,6 +256,25 @@ D3ExperimentResults >> participations [
 	^ participations
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> quarters [
+
+	| durations |
+	durations := participations collect: [ :p |
+		             p -> p totalDuration asSeconds ].
+	^ durations collect: [ :d |
+		  | timeDivision timestamps startTimeAsSeconds |
+		  timeDivision := (d value asSeconds / 4) asFloat.
+		  timestamps := OrderedCollection new.
+		  startTimeAsSeconds := d key startTime asSeconds.
+		  0 to: 3 do: [ :i |
+			  timestamps add: {
+					  (startTimeAsSeconds + (i * timeDivision)).
+					  (startTimeAsSeconds
+					   + (i + 1 * timeDivision min: d value asSeconds)) } ].
+		  d key -> timestamps ]
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> questionSequences [
 
