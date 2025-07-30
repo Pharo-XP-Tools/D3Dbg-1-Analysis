@@ -234,3 +234,8 @@ D3DataAnalysisPresenter >> participationsGeneralInfo [
 D3DataAnalysisPresenter >> setModelBeforeInitialization: aD3ExperimentResults [
 	experiment := aD3ExperimentResults 
 ]
+
+{ #category : 'TOREMOVE' }
+D3DataAnalysisPresenter >> title [ 
+	^'Participations'
+]
