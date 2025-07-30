@@ -93,6 +93,23 @@ D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 		  ifFalse: [ D3AnswerStrategy new ]
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> averageQuestionByParticipant [
+
+	^ ((questions collect: #occurrences) flattened size
+	   / participations size) asFloat
+]
+
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> averageQuestionPerMinute [
+	"Nb questions / nb minutes"
+
+	^ (questions collect: #occurrences) flattened size asFloat
+	  /
+		  (participations collect: [ :p |
+			   p totalDuration asDuration asMinutes ]) sum
+]
+
 { #category : 'as yet unclassified' }
 D3ExperimentResults >> categorizeQuestions [
 
