@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'tag',
 		'question',
-		'occurrences'
+		'occurrences',
+		'questionCategory'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -22,6 +23,11 @@ D3DebuggingQuestion class >> from: anAssociation [
 	question tag: anAssociation key.
 	question question: anAssociation value.
 	^ question
+]
+
+{ #category : 'accessing' }
+D3DebuggingQuestion >> category [
+	^questionCategory 
 ]
 
 { #category : 'accessing' }
@@ -54,6 +60,11 @@ D3DebuggingQuestion >> question [
 D3DebuggingQuestion >> question: anObject [
 
 	question := anObject
+]
+
+{ #category : 'as yet unclassified' }
+D3DebuggingQuestion >> questionCategory: aString [ 
+	questionCategory := aString
 ]
 
 { #category : 'accessing' }
