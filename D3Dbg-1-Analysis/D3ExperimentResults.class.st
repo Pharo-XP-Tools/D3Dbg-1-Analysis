@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'participations',
 		'questionOccurrences',
-		'questions'
+		'questions',
+		'mergedQuestions'
 	],
 	#category : 'D3Dbg-1-Analysis-Model',
 	#package : 'D3Dbg-1-Analysis',
@@ -22,7 +23,7 @@ D3ExperimentResults class >> analysisDataPath [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 D3ExperimentResults class >> dataClassification [
 	^{#echo -> #(6 15 14 7 18 43 53 54 45 12 42 55).
 	#debug -> #(3 4 5 16 49 11 44).
@@ -61,7 +62,7 @@ D3ExperimentResults class >> dataConfiguration [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 D3ExperimentResults class >> dataMerge [
 
 	^ {
