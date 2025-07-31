@@ -60,12 +60,13 @@ D3QuestionsAnalyzerPresenter >> initializeColors [
 { #category : 'initialization' }
 D3QuestionsAnalyzerPresenter >> initializePresenters [
 
+	| questionCountPerExpertise |
 	answerAnalyzer := SpBoxLayout newTopToBottom.
 	questionsTable := self newTable.
 	questionsTable addColumn: ((SpIndexTableColumn title: '')
 			 width: 15;
 			 yourself).
-			"glamorousRedCircle"
+	"glamorousRedCircle"
 	questionsTable addColumn:
 		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
 			 displayBackgroundColor: [ :question |
@@ -80,19 +81,43 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 			 width: 30;
 			 displayAlignment: [ :object | SpColumnAlignment center ];
 			 yourself).
-			
+
 	questionsTable addColumn: (SpCompositeTableColumn new
-			title: 'Question';
-			addColumn: (SpImageTableColumn evaluated: [ :each | 
-				self iconNamed: (each isNewQuestion 
-					ifTrue: [ #greenCircle ] 
-					ifFalse: [ #grayCircleEmpty ]) ]);
-			addColumn: (SpStringTableColumn evaluated: [ :item | item question ])).
-			
+			 title: 'Question';
+			 addColumn: (SpImageTableColumn evaluated: [ :each |
+						  self iconNamed: (each isNewQuestion
+									   ifTrue: [ #greenCircle ]
+									   ifFalse: [ #grayCircleEmpty ]) ]);
+			 addColumn:
+				 (SpStringTableColumn evaluated: [ :item | item question ])).
+
+	questionCountPerExpertise := experiment questionCountPerExpertise.
+	questionsTable addColumn:
+		((SpStringTableColumn title: 'Beg.' evaluated: [ :item |
+				  (questionCountPerExpertise at: #beginner) at: item tag asNumber ])
+			 width: 30;
+			 displayAlignment: [ :object | SpColumnAlignment center ];
+			 yourself).
+	questionsTable addColumn:
+		((SpStringTableColumn title: 'Int.' evaluated: [ :item |
+				  (questionCountPerExpertise at: #intermediate) at:
+						  item tag asNumber ])
+			 width: 30;
+			 displayAlignment: [ :object | SpColumnAlignment center ];
+			 yourself).
+	questionsTable addColumn:
+		((SpStringTableColumn title: 'Exp.' evaluated: [ :item |
+				  (questionCountPerExpertise at: #expert) at: item tag asNumber ])
+			 width: 30;
+			 displayAlignment: [ :object | SpColumnAlignment center ];
+			 yourself).
+
+
 	"questionsTable addColumn: (SpStringTableColumn
 			 title: 'Question'
 			 evaluated: [ :item | item question ]) yourself."
-	questionsTable items: (experiment questions reject: [:q| q count = 0]).
+	questionsTable items:
+		(experiment questions reject: [ :q | q count = 0 ]).
 
 	occurrencesList := self newList.
 	questionsTable transmitDo: [ :item |
