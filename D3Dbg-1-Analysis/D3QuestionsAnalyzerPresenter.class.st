@@ -74,6 +74,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable addColumn: ((SpIndexTableColumn title: '')
 			 width: 15;
 			 yourself).
+			"glamorousRedCircle"
 	questionsTable addColumn:
 		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
 			 displayBackgroundColor: [ :question |
@@ -88,9 +89,18 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 			 width: 30;
 			 displayAlignment: [ :object | SpColumnAlignment center ];
 			 yourself).
-	questionsTable addColumn: (SpStringTableColumn
+			
+	questionsTable addColumn: (SpCompositeTableColumn new
+			title: 'Question';
+			addColumn: (SpImageTableColumn evaluated: [ :each | 
+				self iconNamed: (each isNewQuestion 
+					ifTrue: [ #greenCircle ] 
+					ifFalse: [ #grayCircleEmpty ]) ]);
+			addColumn: (SpStringTableColumn evaluated: [ :item | item question ])).
+			
+	"questionsTable addColumn: (SpStringTableColumn
 			 title: 'Question'
-			 evaluated: [ :item | item question ]) yourself.
+			 evaluated: [ :item | item question ]) yourself."
 	questionsTable items: (experiment questions reject: [:q| q count = 0]).
 
 	occurrencesList := self newList.
