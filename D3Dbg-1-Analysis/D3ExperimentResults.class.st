@@ -83,6 +83,12 @@ D3ExperimentResults class >> experimentName [
 	^'Echo-1'
 ]
 
+{ #category : 'accessing' }
+D3ExperimentResults class >> newQuestionsIds [
+
+	^ self dataClassification values flattened
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 

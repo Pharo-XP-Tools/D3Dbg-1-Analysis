@@ -35,6 +35,12 @@ D3DebuggingQuestion >> count [
 	^occurrences size
 ]
 
+{ #category : 'testing' }
+D3DebuggingQuestion >> isNewQuestion [
+
+	^ D3ExperimentResults newQuestionsIds includes: tag asNumber
+]
+
 { #category : 'accessing' }
 D3DebuggingQuestion >> occurrences [
 
