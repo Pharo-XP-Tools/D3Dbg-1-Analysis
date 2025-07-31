@@ -134,6 +134,15 @@ D3ExperimentResults >> categorizeQuestions [
 			(v includes: q tag asNumber) ifTrue: [ q questionCategory: k ] ] ]
 ]
 
+{ #category : 'initialization' }
+D3ExperimentResults >> colorForQuestion: aQuestion [
+
+	aQuestion category = #echo ifTrue: [ ^ Color yellow lighter].
+	aQuestion category = #debug ifTrue: [ ^ Color orange lighter lighter].
+	aQuestion category = #comprehension ifTrue: [ ^ Color magenta lighter lighter].
+	^ Color lightGreen lighter
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> dataConfiguration [
 	^self class dataConfiguration
@@ -321,9 +330,12 @@ D3ExperimentResults >> questionSequencesGraph [
 
 	canvas := RSCanvas new.
 
-	colors := ((self questionsColorsBase: '#ff0000') associations
+	colors := (questions collect:[:q| q tag asNumber -> (self colorForQuestion: q)]) asDictionary.
+	 
+	"((self questionsColorsBase: '#ff0000') associations
 		           collect: [ :ass | ass key tag asNumber -> ass value ])
-		          asDictionary.
+		          asDictionary."
+		
 	shapes := connections keys asArray collect: [ :m |
 		          RSBox new
 			          labeled;

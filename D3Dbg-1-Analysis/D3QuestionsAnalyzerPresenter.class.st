@@ -19,15 +19,6 @@ Class {
 	#tag : 'Presenters'
 }
 
-{ #category : 'initialization' }
-D3QuestionsAnalyzerPresenter >> colorForQuestion: aQuestion [
-
-	aQuestion category = #echo ifTrue: [ ^ Color yellow lighter].
-	aQuestion category = #debug ifTrue: [ ^ Color orange lighter lighter].
-	aQuestion category = #comprehension ifTrue: [ ^ Color magenta lighter lighter].
-	^ Color lightGreen lighter
-]
-
 { #category : 'layout' }
 D3QuestionsAnalyzerPresenter >> defaultLayout [
 
@@ -78,7 +69,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable addColumn:
 		((SpStringTableColumn title: 'Tag' evaluated: [ :item | item tag ])
 			 displayBackgroundColor: [ :question |
-				 self colorForQuestion: question ];
+				 experiment colorForQuestion: question ];
 			 displayAlignment: [ :object | SpColumnAlignment center ];
 			 width: 30;
 			 yourself).
