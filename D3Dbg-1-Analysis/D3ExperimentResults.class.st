@@ -90,7 +90,7 @@ D3ExperimentResults class >> newQuestionsIds [
 	     42 43 44 45 46 49 52 53 54 55 )
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 
 	| fileRef |
@@ -124,7 +124,7 @@ D3ExperimentResults >> averageQuestionPerMinute [
 			   p totalDuration asDuration asMinutes ]) sum
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> categorizeQuestions [
 
 	| categories |
@@ -143,7 +143,7 @@ D3ExperimentResults >> colorForQuestion: aQuestion [
 	^ Color lightGreen lighter
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> dataConfiguration [
 	^self class dataConfiguration
 ]
@@ -164,7 +164,7 @@ D3ExperimentResults >> load [
 	question_by_file keysDo: [ :e | (participations at: ((e truncateTo:2) asNumber ))question: (question_by_file at:e) ]
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> loadParticipations [
 
 	participations := SortedCollection new sortBlock: [ :p1 :p2 |
@@ -181,7 +181,7 @@ D3ExperimentResults >> loadParticipations [
 			participations add: participation ] ]
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> loadQuestions [
 
 	| occurrences |
@@ -238,7 +238,7 @@ D3ExperimentResults >> medianDuration [
 		  median
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> mergeQuestions [
 
 	| dataMerge questionsToMerge |
@@ -272,7 +272,7 @@ D3ExperimentResults >> participations [
 	^ participations
 ]
 
-{ #category : 'descriptive statistics' }
+{ #category : 'data access' }
 D3ExperimentResults >> quarters [
 
 	| durations |
@@ -317,7 +317,7 @@ D3ExperimentResults >> questionSequences [
 			  reject: #isNil ]
 ]
 
-{ #category : 'data access' }
+{ #category : 'descriptive statistics' }
 D3ExperimentResults >> questionSequencesGraph [
 
 	| connections sequences canvas shapes colors |
@@ -389,7 +389,7 @@ D3ExperimentResults >> questionsCountPerParticipant [
 		  asDictionary
 ]
 
-{ #category : 'data access' }
+{ #category : 'data loading' }
 D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrence: aQuestionOccurrence [
 
 	| fileRef |
