@@ -275,6 +275,14 @@ D3ExperimentResults >> quarters [
 		  d key -> timestamps ]
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> questionSequencePerParticipant [
+
+	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
+		   p -> (p questions collect: [ :occ | occ at: 'tag' ]) ])
+		  asDictionary
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> questionSequences [
 
