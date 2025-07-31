@@ -90,6 +90,15 @@ D3ExperimentResults class >> newQuestionsIds [
 	     42 43 44 45 46 49 52 53 54 55 )
 ]
 
+{ #category : 'accessing' }
+D3ExperimentResults class >> participantsExpertise [
+
+	^ {
+		  (#beginner -> #( 2 6 9 1 3 7 )).
+		  (#intermediate -> #( 4 11 8 13 15 )).
+		  (#expert -> #( 10 12 5 14 )) } asDictionary
+]
+
 { #category : 'data loading' }
 D3ExperimentResults >> answerStrategyAnalysisFor: aQuestionOccurrence [
 
@@ -264,6 +273,19 @@ D3ExperimentResults >> minMaxDuration [
 	|durations|
 	durations := (participations collect: [ :p | p totalDuration asDuration ]).
 	^{durations min. durations max}
+]
+
+{ #category : 'data access' }
+D3ExperimentResults >> participantsPerExpertise [
+
+	| expertises perExpertise |
+	expertises := self class participantsExpertise.
+	perExpertise := Dictionary new.
+	participations do: [ :p |
+		expertises keysAndValuesDo: [ :k :v |
+			(v includes: p participationId asNumber) ifTrue: [
+				(perExpertise at: k ifAbsentPut: [ OrderedCollection new ]) add: p ] ] ].
+	^ perExpertise
 ]
 
 { #category : 'accessing' }
