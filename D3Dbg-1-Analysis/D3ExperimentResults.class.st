@@ -85,7 +85,7 @@ D3ExperimentResults class >> experimentName [
 
 { #category : 'accessing' }
 D3ExperimentResults class >> newQuestionsIds [
-
+	self flag: 'FIXME: I will not work as soon as we classify questions from Sillito and Kubelka under the same classification.'.
 	^ self dataClassification values flattened
 ]
 
