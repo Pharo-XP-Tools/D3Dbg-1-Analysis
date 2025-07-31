@@ -133,6 +133,19 @@ D3ExperimentResults >> averageQuestionPerMinute [
 			   p totalDuration asDuration asMinutes ]) sum
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> averageQuestionsPerExpertise [
+
+	| result |
+	result := Dictionary new.
+	self participantsPerExpertise keysAndValuesDo: [ :expertise :parts |
+		result
+			at: expertise
+			put:
+			(parts collect: [ :p | (p questions ifNil: [ #(  ) ]) size ]) average asFloat].
+	^ result
+]
+
 { #category : 'data loading' }
 D3ExperimentResults >> categorizeQuestions [
 
@@ -314,6 +327,37 @@ D3ExperimentResults >> quarters [
 ]
 
 { #category : 'descriptive statistics' }
+D3ExperimentResults >> questionCountPerExpertise [
+
+	| result |
+	result := Dictionary new.
+	self participantsPerExpertise keysAndValuesDo: [ :expertise :parts |
+		| questionsForExpertise counts |
+		questionsForExpertise := ((((parts select: [ :p |
+			                             p questions isNotNil ]) flatCollect:
+			                            #questions) collect: [ :d |
+			                           d at: 'tag' ]) select:
+			                          #isAllAlphaNumerics) collect: #asNumber.
+		counts := OrderedCollection new.
+		((questions collect: #tag) collect: #asNumber) do: [ :qn |
+			counts add: qn -> (questionsForExpertise count: [:each| each = qn]) ].
+		result at: expertise put: counts asDictionary ].
+	^ result
+]
+
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> questionNumberPerExpertise [
+
+	| result |
+	result := Dictionary new.
+	self questionCountPerExpertise keysAndValuesDo: [ :exp :count |
+		count keysAndValuesDo: [ :q :n |
+			n > 0 ifTrue: [
+				(result at: exp ifAbsentPut: [ OrderedCollection new ]) add: q ] ] ].
+	^ result
+]
+
+{ #category : 'descriptive statistics' }
 D3ExperimentResults >> questionNumbersPerParticipant [
 
 	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
@@ -419,6 +463,19 @@ D3ExperimentResults >> saveAnswerStrategyAnalysis: analysis forQuestionOccurrenc
 	fileRef writeStream
 		nextPutAll: (STON toString: analysis);
 		close
+]
+
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> totalQuestionsPerExpertise [
+
+	| result |
+	result := Dictionary new.
+	self participantsPerExpertise keysAndValuesDo: [ :expertise :parts |
+		result
+			at: expertise
+			put:
+			(parts collect: [ :p | (p questions ifNil: [ #(  ) ]) size ]) sum ].
+	^ result
 ]
 
 { #category : 'data access' }
