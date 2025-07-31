@@ -276,6 +276,14 @@ D3ExperimentResults >> quarters [
 ]
 
 { #category : 'descriptive statistics' }
+D3ExperimentResults >> questionNumbersPerParticipant [
+
+	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
+		   p -> (p questions collect: [ :occ | occ at: 'tag' ]) asSet ])
+		  asDictionary
+]
+
+{ #category : 'descriptive statistics' }
 D3ExperimentResults >> questionSequencePerParticipant [
 
 	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
@@ -352,6 +360,14 @@ D3ExperimentResults >> questionsColorsBase: aHexString [
 		colors at: q put: color.
 		color := color lighter ].
 	^ colors
+]
+
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> questionsCountPerParticipant [
+
+	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
+		   p -> (p questions collect: [ :occ | occ at: 'tag' ]) size ])
+		  asDictionary
 ]
 
 { #category : 'data access' }
