@@ -91,7 +91,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 	questionsTable addColumn: (SpStringTableColumn
 			 title: 'Question'
 			 evaluated: [ :item | item question ]) yourself.
-	questionsTable items: experiment questions.
+	questionsTable items: (experiment questions reject: [:q| q count = 0]).
 
 	occurrencesList := self newList.
 	questionsTable transmitDo: [ :item |
@@ -111,7 +111,7 @@ D3QuestionsAnalyzerPresenter >> initializePresenters [
 D3QuestionsAnalyzerPresenter >> setModelBeforeInitialization: anExperimentResults [
 
 	experiment := anExperimentResults.
-	totalQuestions := experiment questions size.
+	totalQuestions := (experiment questions reject: [:q| q count = 0]) size.
 	totalOccurrences := ((experiment questions collect: #occurrences)
 		                     collect: #size) sum
 ]

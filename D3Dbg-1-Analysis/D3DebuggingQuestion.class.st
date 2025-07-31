@@ -31,6 +31,11 @@ D3DebuggingQuestion >> category [
 ]
 
 { #category : 'accessing' }
+D3DebuggingQuestion >> count [
+	^occurrences size
+]
+
+{ #category : 'accessing' }
 D3DebuggingQuestion >> occurrences [
 
 	^ occurrences
