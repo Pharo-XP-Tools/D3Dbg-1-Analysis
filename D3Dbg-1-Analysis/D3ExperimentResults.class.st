@@ -260,6 +260,14 @@ D3ExperimentResults >> medianDuration [
 		  median
 ]
 
+{ #category : 'data access' }
+D3ExperimentResults >> mergeNumberFor: aQuestionNumber [
+
+	self class dataMerge keysAndValuesDo: [ :k :v |
+		(v includes: aQuestionNumber) ifTrue: [ ^ k ] ].
+	^ aQuestionNumber
+]
+
 { #category : 'data loading' }
 D3ExperimentResults >> mergeQuestions [
 
@@ -340,7 +348,7 @@ D3ExperimentResults >> questionCountPerExpertise [
 			                          #isAllAlphaNumerics) collect: #asNumber.
 		counts := OrderedCollection new.
 		((questions collect: #tag) collect: #asNumber) do: [ :qn |
-			counts add: qn -> (questionsForExpertise count: [:each| each = qn]) ].
+			counts add: qn -> (questionsForExpertise count: [:each| (self mergeNumberFor: each) = qn]) ].
 		result at: expertise put: counts asDictionary ].
 	^ result
 ]
@@ -361,7 +369,7 @@ D3ExperimentResults >> questionNumberPerExpertise [
 D3ExperimentResults >> questionNumbersPerParticipant [
 
 	^ ((participations select: [ :p | p questions notNil ]) collect: [ :p |
-		   p -> (p questions collect: [ :occ | occ at: 'tag' ]) asSet ])
+		   p -> (p questions collect: [ :occ | self mergeNumberFor: (occ at: 'tag') ]) asSet ])
 		  asDictionary
 ]
 
@@ -378,8 +386,7 @@ D3ExperimentResults >> questionSequences [
 
 	^ ((participations collect: #questions) reject: #isNil) collect: [
 		  :qs |
-		  (qs collect: [ :d |
-			   (D3DebuggingQuestionOccurence fromDictionary: d) tag asInteger ])
+		  (qs collect: [ :d | self mergeNumberFor: (d at: 'tag') asInteger ])
 			  reject: #isNil ]
 ]
 
