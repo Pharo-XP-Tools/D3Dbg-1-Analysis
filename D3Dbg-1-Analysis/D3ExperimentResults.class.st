@@ -485,6 +485,12 @@ D3ExperimentResults >> totalQuestionsPerExpertise [
 	^ result
 ]
 
+{ #category : 'descriptive statistics' }
+D3ExperimentResults >> totalTimePerToolPerParticipant [
+
+	^ (participations collect: [ :p | p -> p timePerTool ]) asDictionary
+]
+
 { #category : 'data access' }
 D3ExperimentResults >> usedToolsFor: aD3DebuggingQuestionOccurence [
 

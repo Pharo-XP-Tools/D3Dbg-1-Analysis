@@ -255,6 +255,30 @@ D3Participation >> taskName: aString [
 	taskName := aString
 ]
 
+{ #category : 'analysis' }
+D3Participation >> timePerTool [
+
+	| computeBlock origin modified |
+	computeBlock := [ :source :dest |
+	                (source windows groupedBy: [ :w |
+		                 w toolInfos
+			                 ifNil: [ 'unknown' ]
+			                 ifNotNil: [ w toolInfos first toolClassName ] ])
+		                keysAndValuesDo: [ :tool :windows |
+			                dest
+				                at: tool
+				                put: (windows collect: [ :w | w totalTime ]) sum ] ].
+
+	origin := Dictionary new.
+	modified := Dictionary new.
+	computeBlock value: oEventHistory value: origin.
+	computeBlock value: mEventHistory value: modified.
+
+	^ {
+		  (#origin -> origin).
+		  (#modified -> modified) } asDictionary
+]
+
 { #category : 'accessing' }
 D3Participation >> totalDuration [
 
